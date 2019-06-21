@@ -501,7 +501,7 @@ public:
     void set_gain_setting(const uint32_t gain_setting) { (uint32_t&)msgData[headerLength + 20] = gain_setting; }
     uint16_t profile_data_length() const { return (uint16_t&)msgData[headerLength + 24]; }
     //TODO do this in constructor (const)
-    void set_profile_data_length(const uint16_t profile_data_length) { (uint8_t&)msgData[headerLength + 24] = profile_data_length;}
+    void set_profile_data_length(const uint16_t profile_data_length) { (uint16_t&)msgData[headerLength + 24] = profile_data_length;}
     uint8_t* profile_data() const { return (uint8_t*)(msgData+headerLength+26); }
     void set_profile_data_at(const uint16_t i, const uint8_t data) { (uint8_t&)msgData[headerLength + 26 + i] = data; }
 };
