@@ -67,7 +67,7 @@ public:
     void set_transmit_frequency(const uint16_t transmit_frequency) { (uint16_t&)msgData[headerLength + 8] = transmit_frequency; }
     uint16_t number_of_samples() const { return (uint16_t&)msgData[headerLength + 10]; }
     void set_number_of_samples(const uint16_t number_of_samples) { (uint16_t&)msgData[headerLength + 10] = number_of_samples; }
-    uint16_t data_length() const { return *(uint16_t*)(msgData+headerLength + 12); }
+    uint16_t data_length() const { return (uint16_t&)msgData[headerLength + 12]; }
     //TODO do this in constructor (const)
     void set_data_length(const uint16_t data_length) { (uint8_t&)msgData[headerLength + 12] = data_length;}
     uint8_t* data() const { return (uint8_t*)(msgData+headerLength+14); }

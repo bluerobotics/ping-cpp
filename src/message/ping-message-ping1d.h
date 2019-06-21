@@ -499,7 +499,7 @@ public:
     void set_scan_length(const uint32_t scan_length) { (uint32_t&)msgData[headerLength + 16] = scan_length; }
     uint32_t gain_setting() const { return (uint32_t&)msgData[headerLength + 20]; }
     void set_gain_setting(const uint32_t gain_setting) { (uint32_t&)msgData[headerLength + 20] = gain_setting; }
-    uint16_t profile_data_length() const { return *(uint16_t*)(msgData+headerLength + 24); }
+    uint16_t profile_data_length() const { return (uint16_t&)msgData[headerLength + 24]; }
     //TODO do this in constructor (const)
     void set_profile_data_length(const uint16_t profile_data_length) { (uint8_t&)msgData[headerLength + 24] = profile_data_length;}
     uint8_t* profile_data() const { return (uint8_t*)(msgData+headerLength+26); }
