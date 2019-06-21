@@ -39,6 +39,11 @@ private:
     uint8_t state_ = WAIT_START;
 
 public:
+    void reset()
+    {
+        state_ = WAIT_START;
+    }
+
     ParseState parseByte(const uint8_t b)
     {
         switch(state_) {
