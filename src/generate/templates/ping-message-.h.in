@@ -66,7 +66,7 @@ public:
 {% for payload in m.payload %}
 {% if generator.is_vector(payload.type) %}
 {% if payload.vector.sizetype %}
-    {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length() const { return *({{generator.get_type_string(payload.vector.sizetype)}}*)(msgData+headerLength + {{byte.offset}}); }
+    {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length() const { return ({{generator.get_type_string(payload.vector.sizetype)}}&)msgData[headerLength + {{byte.offset}}]; }
     //TODO do this in constructor (const)
     void set_{{payload.name}}_length(const {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length) { ({{generator.get_type_string(payload.vector.datatype)}}&)msgData[headerLength + {{byte.offset}}] = {{payload.name}}_length;}
 {% set byte.offset = byte.offset + generator.get_c_size(payload.vector.sizetype) %}
