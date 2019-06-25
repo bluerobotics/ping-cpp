@@ -20,7 +20,12 @@ public:
     ping_message(const uint16_t bufferLength)
         : _bufferLength { bufferLength }
         , msgData { (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength) }
-    {}
+    {
+        if (bufferLength >= 2) {
+            msgData[0] = 'B';
+            msgData[1] = 'R';
+        }
+    }
 
     ping_message(const uint8_t* buf, const uint16_t length)
         : _bufferLength { length }
