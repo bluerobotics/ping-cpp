@@ -54,7 +54,7 @@ public:
 
     uint16_t payload_length()                const { return (uint16_t&)msgData[2]; }
     uint16_t message_id()                    const { return (uint16_t&)msgData[4]; }
-    void set_message_id(const uint16_t message_id) { msgData[4] = message_id; }
+    void set_message_id(const uint16_t message_id) { (uint16_t&)msgData[4] = message_id; }
     uint8_t  source_device_id()              const { return msgData[6]; }
     void set_source_device_id(const uint16_t device_id) { msgData[6] = device_id; }
     uint8_t  destination_device_id()         const { return msgData[7]; }
