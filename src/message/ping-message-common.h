@@ -25,7 +25,8 @@ class common_ack : public ping_message
 public:
     common_ack(const ping_message& msg) : ping_message { msg } {}
     common_ack(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_ack()        : ping_message { static_cast<uint16_t>(12) }    {
+    common_ack() : ping_message { static_cast<uint16_t>(12) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 2; // payload size
@@ -43,7 +44,8 @@ class common_nack : public ping_message
 public:
     common_nack(const ping_message& msg) : ping_message { msg } {}
     common_nack(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_nack(uint16_t nack_message_length)        : ping_message { static_cast<uint16_t>(12 + nack_message_length) }    {
+    common_nack(uint16_t nack_message_length) : ping_message { static_cast<uint16_t>(12 + nack_message_length) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 2 + nack_message_length; // payload size
@@ -63,7 +65,8 @@ class common_ascii_text : public ping_message
 public:
     common_ascii_text(const ping_message& msg) : ping_message { msg } {}
     common_ascii_text(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_ascii_text(uint16_t ascii_message_length)        : ping_message { static_cast<uint16_t>(10 + ascii_message_length) }    {
+    common_ascii_text(uint16_t ascii_message_length) : ping_message { static_cast<uint16_t>(10 + ascii_message_length) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 0 + ascii_message_length; // payload size
@@ -81,7 +84,8 @@ class common_general_request : public ping_message
 public:
     common_general_request(const ping_message& msg) : ping_message { msg } {}
     common_general_request(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_general_request()        : ping_message { static_cast<uint16_t>(12) }    {
+    common_general_request() : ping_message { static_cast<uint16_t>(12) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 2; // payload size
@@ -99,7 +103,8 @@ class common_device_information : public ping_message
 public:
     common_device_information(const ping_message& msg) : ping_message { msg } {}
     common_device_information(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_device_information()        : ping_message { static_cast<uint16_t>(16) }    {
+    common_device_information() : ping_message { static_cast<uint16_t>(16) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 6; // payload size
@@ -127,7 +132,8 @@ class common_protocol_version : public ping_message
 public:
     common_protocol_version(const ping_message& msg) : ping_message { msg } {}
     common_protocol_version(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_protocol_version()        : ping_message { static_cast<uint16_t>(14) }    {
+    common_protocol_version() : ping_message { static_cast<uint16_t>(14) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 4; // payload size

@@ -23,7 +23,8 @@ class ping360_device_id : public ping_message
 public:
     ping360_device_id(const ping_message& msg) : ping_message { msg } {}
     ping360_device_id(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    ping360_device_id()        : ping_message { static_cast<uint16_t>(12) }    {
+    ping360_device_id() : ping_message { static_cast<uint16_t>(12) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 2; // payload size
@@ -44,7 +45,8 @@ public:
     ping360_device_data(const ping_message& msg) : ping_message { msg } {}
     ping360_device_data(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
     ping360_device_data(uint16_t data_length
-)        : ping_message { static_cast<uint16_t>(24 + data_length) }    {
+) : ping_message { static_cast<uint16_t>(24 + data_length) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 14 + data_length; // payload size
@@ -79,7 +81,8 @@ class ping360_reset : public ping_message
 public:
     ping360_reset(const ping_message& msg) : ping_message { msg } {}
     ping360_reset(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    ping360_reset()        : ping_message { static_cast<uint16_t>(12) }    {
+    ping360_reset() : ping_message { static_cast<uint16_t>(12) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 2; // payload size
@@ -99,7 +102,8 @@ class ping360_transducer : public ping_message
 public:
     ping360_transducer(const ping_message& msg) : ping_message { msg } {}
     ping360_transducer(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    ping360_transducer()        : ping_message { static_cast<uint16_t>(24) }    {
+    ping360_transducer() : ping_message { static_cast<uint16_t>(24) }
+    {
         msgData[0] = 'B';
         msgData[1] = 'R';
         (uint16_t&)msgData[2] = 14; // payload size
