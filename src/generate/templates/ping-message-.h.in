@@ -40,13 +40,14 @@ public:
             uint16_t {{payload.name}}_length
 {%- endif %}
 {% endif %}
-{% endfor %}){# each payload field #}
-        : ping_message { static_cast<uint16_t>({{8 + total_payload + 2}}
+{% endfor %}{# each payload field #}
+) : ping_message { static_cast<uint16_t>({{8 + total_payload + 2}}
 {%- for payload in m.payload %}
 {% if generator.is_vector(payload.type) %}
  + {{payload.name}}_length
 {%- endif %}
 {% endfor %}) }{# each payload field #}
+
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
