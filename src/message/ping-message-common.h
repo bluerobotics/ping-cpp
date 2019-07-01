@@ -12,12 +12,50 @@
 // TODO: should maybe be an enum
 namespace CommonId
 {
-    static const uint16_t ACK = 1;
-    static const uint16_t NACK = 2;
     static const uint16_t ASCII_TEXT = 3;
     static const uint16_t GENERAL_REQUEST = 6;
+    static const uint16_t ACK = 1;
+    static const uint16_t NACK = 2;
     static const uint16_t DEVICE_INFORMATION = 4;
     static const uint16_t PROTOCOL_VERSION = 5;
+};
+
+class common_ascii_text : public ping_message
+{
+public:
+    common_ascii_text(const ping_message& msg) : ping_message { msg } {}
+    common_ascii_text(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
+    common_ascii_text(uint16_t ascii_message_length) : ping_message { static_cast<uint16_t>(10 + ascii_message_length) }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 0 + ascii_message_length; // payload size
+        (uint16_t&)msgData[4] = 3; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    char* ascii_message() const { return (char*)(msgData+headerLength+0); }
+    void set_ascii_message_at(const uint16_t i, const char data) { (char&)msgData[headerLength + 0 + i] = data; }
+};
+
+class common_general_request : public ping_message
+{
+public:
+    common_general_request(const ping_message& msg) : ping_message { msg } {}
+    common_general_request(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
+    common_general_request() : ping_message { static_cast<uint16_t>(12) }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        (uint16_t&)msgData[2] = 2; // payload size
+        (uint16_t&)msgData[4] = 6; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint16_t requested_id() const { return (uint16_t&)msgData[headerLength + 0]; }
+    void set_requested_id(const uint16_t requested_id) { (uint16_t&)msgData[headerLength + 0] = requested_id; }
 };
 
 class common_ack : public ping_message
@@ -58,44 +96,6 @@ public:
     void set_nacked_id(const uint16_t nacked_id) { (uint16_t&)msgData[headerLength + 0] = nacked_id; }
     char* nack_message() const { return (char*)(msgData+headerLength+2); }
     void set_nack_message_at(const uint16_t i, const char data) { (char&)msgData[headerLength + 2 + i] = data; }
-};
-
-class common_ascii_text : public ping_message
-{
-public:
-    common_ascii_text(const ping_message& msg) : ping_message { msg } {}
-    common_ascii_text(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_ascii_text(uint16_t ascii_message_length) : ping_message { static_cast<uint16_t>(10 + ascii_message_length) }
-    {
-        msgData[0] = 'B';
-        msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 0 + ascii_message_length; // payload size
-        (uint16_t&)msgData[4] = 3; // ID
-        msgData[6] = 0;
-        msgData[7] = 0;
-    }
-
-    char* ascii_message() const { return (char*)(msgData+headerLength+0); }
-    void set_ascii_message_at(const uint16_t i, const char data) { (char&)msgData[headerLength + 0 + i] = data; }
-};
-
-class common_general_request : public ping_message
-{
-public:
-    common_general_request(const ping_message& msg) : ping_message { msg } {}
-    common_general_request(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    common_general_request() : ping_message { static_cast<uint16_t>(12) }
-    {
-        msgData[0] = 'B';
-        msgData[1] = 'R';
-        (uint16_t&)msgData[2] = 2; // payload size
-        (uint16_t&)msgData[4] = 6; // ID
-        msgData[6] = 0;
-        msgData[7] = 0;
-    }
-
-    uint16_t requested_id() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_requested_id(const uint16_t requested_id) { (uint16_t&)msgData[headerLength + 0] = requested_id; }
 };
 
 class common_device_information : public ping_message
