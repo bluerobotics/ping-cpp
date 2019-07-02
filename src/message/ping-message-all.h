@@ -7,9 +7,9 @@
 
 #pragma once
 
+#include "ping-message-ping360.h"
 #include "ping-message-common.h"
 #include "ping-message-ping1d.h"
-#include "ping-message-ping360.h"
 
 enum class PingDeviceType {
     UNKNOWN = 0,
@@ -17,41 +17,72 @@ enum class PingDeviceType {
     PING360 = 2,
 };
 
+/**
+ * @brief Ping Helper class
+ *  All functions should be validated in compile time or static
+ *
+ */
+class PingHelper {
+public:
+    /**
+     * @brief Return a human friendly device name
+     *
+     * @param deviceType
+     * @return constexpr const char*
+     */
+    static constexpr const char* nameFromDeviceType(const PingDeviceType deviceType) {
+        switch(deviceType) {
+            case(PingDeviceType::UNKNOWN):
+                return "UNKNOWN";
+            case(PingDeviceType::PING1D):
+                return "Ping1D";
+            case(PingDeviceType::PING360):
+                return "Ping360";
+            default:
+                return "Unregistered";
+        }
+    }
+
+private:
+    PingHelper() = default;
+    ~PingHelper() = default;
+};
+
 enum class PingMessageId {
+    PING360_TRANSDUCER = 2601,
+    PING360_RESET = 2600,
+    PING360_DEVICE_DATA = 2300,
+    PING360_DEVICE_ID = 2000,
+    COMMON_NACK = 2,
+    COMMON_ACK = 1,
     COMMON_ASCII_TEXT = 3,
     COMMON_GENERAL_REQUEST = 6,
-    COMMON_ACK = 1,
-    COMMON_NACK = 2,
-    COMMON_DEVICE_INFORMATION = 4,
     COMMON_PROTOCOL_VERSION = 5,
-    PING1D_SET_SPEED_OF_SOUND = 1002,
-    PING1D_SET_PING_ENABLE = 1006,
-    PING1D_SET_PING_INTERVAL = 1004,
-    PING1D_SET_MODE_AUTO = 1003,
-    PING1D_SET_DEVICE_ID = 1000,
-    PING1D_SET_GAIN_SETTING = 1005,
-    PING1D_SET_RANGE = 1001,
-    PING1D_VOLTAGE_5 = 1202,
-    PING1D_SPEED_OF_SOUND = 1203,
-    PING1D_PROCESSOR_TEMPERATURE = 1213,
-    PING1D_FIRMWARE_VERSION = 1200,
-    PING1D_MODE_AUTO = 1205,
-    PING1D_TRANSMIT_DURATION = 1208,
-    PING1D_DISTANCE = 1212,
-    PING1D_PCB_TEMPERATURE = 1214,
-    PING1D_PING_ENABLE = 1215,
-    PING1D_GENERAL_INFO = 1210,
-    PING1D_GAIN_SETTING = 1207,
-    PING1D_DEVICE_ID = 1201,
-    PING1D_DISTANCE_SIMPLE = 1211,
-    PING1D_PING_INTERVAL = 1206,
-    PING1D_PROFILE = 1300,
-    PING1D_RANGE = 1204,
-    PING1D_CONTINUOUS_STOP = 1401,
+    COMMON_DEVICE_INFORMATION = 4,
     PING1D_CONTINUOUS_START = 1400,
     PING1D_GOTO_BOOTLOADER = 1100,
-    PING360_DEVICE_ID = 2000,
-    PING360_DEVICE_DATA = 2300,
-    PING360_RESET = 2600,
-    PING360_TRANSDUCER = 2601,
+    PING1D_CONTINUOUS_STOP = 1401,
+    PING1D_PING_ENABLE = 1215,
+    PING1D_FIRMWARE_VERSION = 1200,
+    PING1D_VOLTAGE_5 = 1202,
+    PING1D_PROFILE = 1300,
+    PING1D_DISTANCE = 1212,
+    PING1D_DISTANCE_SIMPLE = 1211,
+    PING1D_RANGE = 1204,
+    PING1D_PING_INTERVAL = 1206,
+    PING1D_GENERAL_INFO = 1210,
+    PING1D_TRANSMIT_DURATION = 1208,
+    PING1D_MODE_AUTO = 1205,
+    PING1D_PCB_TEMPERATURE = 1214,
+    PING1D_SPEED_OF_SOUND = 1203,
+    PING1D_GAIN_SETTING = 1207,
+    PING1D_DEVICE_ID = 1201,
+    PING1D_PROCESSOR_TEMPERATURE = 1213,
+    PING1D_SET_MODE_AUTO = 1003,
+    PING1D_SET_RANGE = 1001,
+    PING1D_SET_PING_INTERVAL = 1004,
+    PING1D_SET_SPEED_OF_SOUND = 1002,
+    PING1D_SET_PING_ENABLE = 1006,
+    PING1D_SET_DEVICE_ID = 1000,
+    PING1D_SET_GAIN_SETTING = 1005,
 };
