@@ -17,6 +17,37 @@ enum class PingDeviceType {
     PING360 = 2,
 };
 
+/**
+ * @brief Ping Helper class
+ *  All functions should be validated in compile time or static
+ *
+ */
+class PingHelper {
+public:
+    /**
+     * @brief Return a human friendly device name
+     *
+     * @param deviceType
+     * @return constexpr const char*
+     */
+    static constexpr const char* nameFromDeviceType(const PingDeviceType deviceType) {
+        switch(deviceType) {
+            case(PingDeviceType::UNKNOWN):
+                return "UNKNOWN";
+            case(PingDeviceType::PING1D):
+                return "Ping1D";
+            case(PingDeviceType::PING360):
+                return "Ping360";
+            default:
+                return "Unregistered";
+        }
+    }
+
+private:
+    PingHelper() = default;
+    ~PingHelper() = default;
+};
+
 enum class PingMessageId {
 {% for definition in global %}
 {% for messages in global[definition] %}
