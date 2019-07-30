@@ -11,11 +11,38 @@
 #include "ping-message-{{definition}}.h"
 {% endfor %}
 
+// Declare an empty Q_NAMESPACE and Q_ENUM_NS if it's not a Qt project, otherwise include QObject
+#ifndef QT_CORE_LIB
+#define Q_NAMESPACE
+#define Q_ENUM_NS(x)
+#else
+#include <QObject>
+#endif
+
+namespace PingEnumNamespace {
+Q_NAMESPACE
 enum class PingDeviceType {
     UNKNOWN = 0,
     PING1D = 1,
     PING360 = 2,
 };
+Q_ENUM_NS(PingDeviceType)
+
+enum class PingMessageId {
+{% for definition in global %}
+{% for messages in global[definition] %}
+{% for message_type in global[definition][messages] %}
+{% for message in global[definition][messages][message_type] %}
+    {{definition|upper}}_{{message|upper}} = {{global[definition][messages][message_type][message].id}},
+{% endfor %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
+};
+Q_ENUM_NS(PingMessageId)
+}
+
+using namespace PingEnumNamespace;
 
 /**
  * @brief Ping Helper class
@@ -46,16 +73,4 @@ public:
 private:
     PingHelper() = default;
     ~PingHelper() = default;
-};
-
-enum class PingMessageId {
-{% for definition in global %}
-{% for messages in global[definition] %}
-{% for message_type in global[definition][messages] %}
-{% for message in global[definition][messages][message_type] %}
-    {{definition|upper}}_{{message|upper}} = {{global[definition][messages][message_type][message].id}},
-{% endfor %}
-{% endfor %}
-{% endfor %}
-{% endfor %}
 };
