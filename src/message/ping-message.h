@@ -53,7 +53,7 @@ public:
 
     uint8_t* msgData;
     uint16_t bufferLength() const { return _bufferLength; } // size of internal buffer allocation
-    uint16_t msgDataLength() const { return headerLength + payload_length() + checksumLength; } // size of entire message buffer (header, payload, and checksum)
+    uint16_t msgDataLength() const { return static_cast<uint16_t>(headerLength + payload_length() + checksumLength); } // size of entire message buffer (header, payload, and checksum)
     uint8_t* message_data(uint32_t offset=0) const { return msgData + offset; }
     uint8_t* payload_data(uint16_t offset=0) const { return msgData + headerLength + offset; }
 
@@ -83,10 +83,10 @@ public:
     }
 
     uint16_t calculateChecksum() const {
-        uint16_t checksum = 0;
+        uint16_t calculatedChecksum = 0;
         for(uint32_t i = 0, data_size = msgDataLength() - checksumLength; i < data_size; i++) {
-            checksum += msgData[i];
+            calculatedChecksum = static_cast<uint16_t>(msgData[i] + calculatedChecksum);
         }
-        return checksum;
+        return calculatedChecksum;
     }
 };
