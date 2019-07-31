@@ -62,9 +62,9 @@ public:
     uint16_t message_id()                    const { return (uint16_t&)msgData[4]; }
     void set_message_id(const uint16_t message_id) { (uint16_t&)msgData[4] = message_id; }
     uint8_t  source_device_id()              const { return msgData[6]; }
-    void set_source_device_id(const uint16_t device_id) { msgData[6] = device_id; }
+    void set_source_device_id(const uint8_t device_id) { msgData[6] = device_id; }
     uint8_t  destination_device_id()         const { return msgData[7]; }
-    void set_destination_device_id(const uint16_t device_id) { msgData[7] = device_id; }
+    void set_destination_device_id(const uint8_t device_id) { msgData[7] = device_id; }
     // to migrate legacy ping1d devices, a new message id should be used with the same fields + padding
     uint16_t checksum()                      const { return msgData[msgDataLength() - checksumLength] + (msgData[msgDataLength() - checksumLength + 1] << 8); }
     void set_checksum(uint16_t checksum)           { msgData[msgDataLength() - checksumLength] = (uint8_t)checksum; msgData[msgDataLength() - checksumLength + 1] = checksum >> 8; }
