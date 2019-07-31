@@ -12,7 +12,7 @@ public:
     ping_message rxMessage; // This message is used as the rx buffer
     uint32_t parsed = 0; // number of messages/packets successfully parsed
     uint32_t errors = 0; // number of parse errors
-    
+
     // This enum MUST be contiguous
     enum ParseState {
         NEW_MESSAGE,   // Just got a complete checksum-verified message
