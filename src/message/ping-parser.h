@@ -69,7 +69,7 @@ public:
             break;
         case WAIT_LENGTH_H:
             rxBuffer_[rxCount_++] = b;
-            payloadLength_ = (b << 8) | payloadLength_;
+            payloadLength_ = static_cast<uint16_t>((b << 8) | payloadLength_);
             if (payloadLength_ <= rxBufferLength_ - 8 - 2) {
                 state_++;
             } else {
