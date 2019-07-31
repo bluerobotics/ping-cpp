@@ -19,7 +19,7 @@ namespace {{definition|capitalize}}Id
     static const uint16_t {{message|upper}} = {{m.id}};
 {% endfor %}
 {% endfor %}
-};
+}
 
 {% for message_type in messages %}
 {% for message in messages[message_type] %}
