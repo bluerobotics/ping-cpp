@@ -6,13 +6,13 @@
 class PingParser
 {
 public:
-    PingParser(uint32_t bufferLength = 512) : rxMessage(bufferLength), rxBuffer_(rxMessage.msgData) {}
+    PingParser(uint16_t bufferLength = 512) : rxMessage(bufferLength), rxBuffer_(rxMessage.msgData) {}
     ~PingParser() = default;
 
     ping_message rxMessage; // This message is used as the rx buffer
     uint32_t parsed = 0; // number of messages/packets successfully parsed
     uint32_t errors = 0; // number of parse errors
-    
+
     // This enum MUST be contiguous
     enum ParseState {
         NEW_MESSAGE,   // Just got a complete checksum-verified message
@@ -69,7 +69,7 @@ public:
             break;
         case WAIT_LENGTH_H:
             rxBuffer_[rxCount_++] = b;
-            payloadLength_ = (b << 8) | payloadLength_;
+            payloadLength_ = static_cast<uint16_t>((b << 8) | payloadLength_);
             if (payloadLength_ <= rxBufferLength_ - 8 - 2) {
                 state_++;
             } else {
