@@ -109,7 +109,7 @@ protected:
    *
    *  @param message: A pointer to the message received from the device
    */
-  void _handleMessage(ping_message* message);
+  virtual void _handleMessage(ping_message* message);
 
 private:
   PingParser _parser;

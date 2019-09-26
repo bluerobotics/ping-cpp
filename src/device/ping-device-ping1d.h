@@ -167,5 +167,5 @@ private:
    *
    *  @param message: A pointer to the message received from the device
    */
-  void _handleMessage(ping_message* message);
+  void _handleMessage(ping_message* message) override;
 };
