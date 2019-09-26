@@ -1,0 +1,91 @@
+#include <ping-device-ping1d.h>
+#include <ping-message-common.h>
+#include <ping-message-ping1d.h>
+
+Ping1d::~Ping1d()
+{
+{% for msg in messages["get"]|sort %}
+{% for field in messages["get"][msg].payload %}
+{% if generator.is_vector(field.type) %}
+  if ({{field.name}}) {
+   free({{field.name}});
+  }
+{% endif %}
+{% endfor %}
+{% endfor %}
+}
+
+bool Ping1d::initialize(uint16_t pingIntervalMs)
+{
+  if (!PingDevice::initialize()) {
+    return false;
+  }
+
+  // Configure ping interval
+  if (!set_ping_interval(pingIntervalMs)) {
+    return false;
+  }
+
+  return true;
+}
+
+void Ping1d::_handleMessage(const ping_message* message)
+{
+  switch (message->message_id()) {
+{% for msg in messages["get"]|sort %}
+{% if not messages["get"][msg].deprecated %}
+    case Ping1dId::{{msg|upper}}:
+    {
+      const ping1d_{{msg}}* msg = static_cast<const ping1d_{{msg}}*>(message);
+{% for field in messages["get"][msg].payload %}
+{% if generator.is_vector(field.type) %}
+      if (msg->{{field.name}}_length() > {{field.name}}_length) {
+        if ({{field.name}}) {
+           free({{field.name}});
+        }
+        {{field.name}} = ({{generator.get_type_string(field.vector.datatype)}}*)malloc(msg->{{field.name}}_length() * sizeof({{generator.get_type_string(field.vector.datatype)}}));
+      }
+
+      {{field.name}}_length = msg->{{field.name}}_length();
+
+      for (uint16_t i = 0; i < {{field.name}}_length; i++) {
+        {{field.name}}[i] = msg->{{field.name}}()[i];
+      }
+{% else %}
+      {{field.name}} = msg->{{field.name}}();
+{% endif %}
+{% endfor %}
+    }
+      break;
+{% endif %}
+{% endfor %}
+
+    default:
+      break;
+  }
+
+  PingDevice::_handleMessage(message);
+}
+
+{% for msg in messages["set"]|sort %}
+bool Ping1d::{{msg}}({% for field in messages["set"][msg].payload %}{{generator.get_type_string(field.type)}} _{{field.name}}, {% endfor %}bool verify)
+{
+  ping1d_{{msg}} msg;
+{% for field in messages["set"][msg].payload %}
+  msg.set_{{field.name}}(_{{field.name}});
+{% endfor %}
+  writeMessage(msg);
+  if (!request(Ping1dId::{{msg|replace("set_", "")|upper}})) {
+    return false; // no reply from device
+  }
+  // Read back the data and check that changes have been applied
+  if (verify
+{% if messages["set"][msg].payload %}
+    && ({% for field in messages["set"][msg].payload %}{{field.name}} != _{{field.name}}{{ "\n        || " if not loop.last }}{% endfor %})) {
+{% endif %}
+    return false; // device reply does not match
+  }
+  return true; // success
+}
+
+{% endfor %}
