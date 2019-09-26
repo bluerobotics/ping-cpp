@@ -26,7 +26,8 @@ templateFile = "%s/ping-message-.h.in" % templatePath
 
 g = Generator()
 
-definitions = [ "common",
+definitions = [ "bluebps",
+                "common",
                 "ping1d",
                 "ping360"]
 
