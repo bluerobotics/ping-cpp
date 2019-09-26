@@ -2,9 +2,10 @@
 // Test creating ping_message object from byte array (receive)
 // Test creating byte array from ping_message object (transmit)
 
+#include <ping-parser.h>
+#include <ping-message-all.h>
+
 #include <stdio.h>
-#include "../src/message/ping-parser.h"
-#include "../src/message/ping-message-all.h"
 
 template <class T>
 bool compare(const char* s, T value, T expected);
