@@ -1,2 +1,4 @@
 **/__pycache__
 **/ping-message-*.h
+build
+src/device/ping-device-ping1d.*
