@@ -4,15 +4,19 @@ echo "Generate messages.."
 git submodule update --init
 src/generate/generate-message.py --output-dir src/message
 
-echo "Run test.."
-if ! g++ test/test-message.cpp -std=c++14 -pedantic -Wall -Werror -Wshadow -Wnarrowing -Wconversion; then
-    echo " Failed to compile test-message!"
+echo "Build tests.."
+mkdir -p build && cd build
+if !(cmake .. && make all); then
+    echo " Failed to compile tests!"
     exit 1
 fi
-if ! ./a.out; then
+echo "run test.."
+ls
+if ! ./test-message; then
     echo " Failed to run test-message!"
     exit 1
 fi
+cd ..
 
 # because these files are gitignored, we have to force-add and commit them
 # in order to move them to the deployment branch. every other approach I tried
