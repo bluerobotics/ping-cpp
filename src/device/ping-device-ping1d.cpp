@@ -23,12 +23,12 @@ bool Ping1d::initialize(uint16_t pingIntervalMs)
   return true;
 }
 
-void Ping1d::_handleMessage(ping_message* message)
+void Ping1d::_handleMessage(const ping_message* message)
 {
   switch (message->message_id()) {
     case Ping1dId::DISTANCE:
     {
-      ping1d_distance* msg = static_cast<ping1d_distance*>(message);
+      const ping1d_distance* msg = static_cast<const ping1d_distance*>(message);
       distance = msg->distance();
       confidence = msg->confidence();
       transmit_duration = msg->transmit_duration();
@@ -40,50 +40,70 @@ void Ping1d::_handleMessage(ping_message* message)
       break;
     case Ping1dId::DISTANCE_SIMPLE:
     {
-      ping1d_distance_simple* msg = static_cast<ping1d_distance_simple*>(message);
+      const ping1d_distance_simple* msg = static_cast<const ping1d_distance_simple*>(message);
       distance = msg->distance();
       confidence = msg->confidence();
     }
       break;
+    case Ping1dId::FIRMWARE_VERSION:
+    {
+      const ping1d_firmware_version* msg = static_cast<const ping1d_firmware_version*>(message);
+      device_type = msg->device_type();
+      device_model = msg->device_model();
+      firmware_version_major = msg->firmware_version_major();
+      firmware_version_minor = msg->firmware_version_minor();
+    }
+      break;
     case Ping1dId::GAIN_SETTING:
     {
-      ping1d_gain_setting* msg = static_cast<ping1d_gain_setting*>(message);
+      const ping1d_gain_setting* msg = static_cast<const ping1d_gain_setting*>(message);
       gain_setting = msg->gain_setting();
+    }
+      break;
+    case Ping1dId::GENERAL_INFO:
+    {
+      const ping1d_general_info* msg = static_cast<const ping1d_general_info*>(message);
+      firmware_version_major = msg->firmware_version_major();
+      firmware_version_minor = msg->firmware_version_minor();
+      voltage_5 = msg->voltage_5();
+      ping_interval = msg->ping_interval();
+      gain_setting = msg->gain_setting();
+      mode_auto = msg->mode_auto();
     }
       break;
     case Ping1dId::MODE_AUTO:
     {
-      ping1d_mode_auto* msg = static_cast<ping1d_mode_auto*>(message);
+      const ping1d_mode_auto* msg = static_cast<const ping1d_mode_auto*>(message);
       mode_auto = msg->mode_auto();
     }
       break;
     case Ping1dId::PCB_TEMPERATURE:
     {
-      ping1d_pcb_temperature* msg = static_cast<ping1d_pcb_temperature*>(message);
+      const ping1d_pcb_temperature* msg = static_cast<const ping1d_pcb_temperature*>(message);
       pcb_temperature = msg->pcb_temperature();
     }
       break;
     case Ping1dId::PING_ENABLE:
     {
-      ping1d_ping_enable* msg = static_cast<ping1d_ping_enable*>(message);
+      const ping1d_ping_enable* msg = static_cast<const ping1d_ping_enable*>(message);
       ping_enabled = msg->ping_enabled();
     }
       break;
     case Ping1dId::PING_INTERVAL:
     {
-      ping1d_ping_interval* msg = static_cast<ping1d_ping_interval*>(message);
+      const ping1d_ping_interval* msg = static_cast<const ping1d_ping_interval*>(message);
       ping_interval = msg->ping_interval();
     }
       break;
     case Ping1dId::PROCESSOR_TEMPERATURE:
     {
-      ping1d_processor_temperature* msg = static_cast<ping1d_processor_temperature*>(message);
+      const ping1d_processor_temperature* msg = static_cast<const ping1d_processor_temperature*>(message);
       processor_temperature = msg->processor_temperature();
     }
       break;
     case Ping1dId::PROFILE:
     {
-      ping1d_profile* msg = static_cast<ping1d_profile*>(message);
+      const ping1d_profile* msg = static_cast<const ping1d_profile*>(message);
       distance = msg->distance();
       confidence = msg->confidence();
       transmit_duration = msg->transmit_duration();
@@ -107,26 +127,26 @@ void Ping1d::_handleMessage(ping_message* message)
       break;
     case Ping1dId::RANGE:
     {
-      ping1d_range* msg = static_cast<ping1d_range*>(message);
+      const ping1d_range* msg = static_cast<const ping1d_range*>(message);
       scan_start = msg->scan_start();
       scan_length = msg->scan_length();
     }
       break;
     case Ping1dId::SPEED_OF_SOUND:
     {
-      ping1d_speed_of_sound* msg = static_cast<ping1d_speed_of_sound*>(message);
+      const ping1d_speed_of_sound* msg = static_cast<const ping1d_speed_of_sound*>(message);
       speed_of_sound = msg->speed_of_sound();
     }
       break;
     case Ping1dId::TRANSMIT_DURATION:
     {
-      ping1d_transmit_duration* msg = static_cast<ping1d_transmit_duration*>(message);
+      const ping1d_transmit_duration* msg = static_cast<const ping1d_transmit_duration*>(message);
       transmit_duration = msg->transmit_duration();
     }
       break;
     case Ping1dId::VOLTAGE_5:
     {
-      ping1d_voltage_5* msg = static_cast<ping1d_voltage_5*>(message);
+      const ping1d_voltage_5* msg = static_cast<const ping1d_voltage_5*>(message);
       voltage_5 = msg->voltage_5();
     }
       break;

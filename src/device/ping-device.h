@@ -49,8 +49,8 @@ public:
    *  @param timeoutMs: The timeout period to wait for the requested
    * ping_message to be received
    *
-   *  @return The ping_message that was requested
-   *  @return null if the device did not reply with the requested message before
+   *  @return The ping_message that was requested, or a nack message if the device nacked the request
+   *  @return null if the device did not reply with the requested message or nack before
    * the timeout period expired
    *
    *  @par ex.
@@ -68,9 +68,8 @@ public:
    *  @param timeoutMs: The timeout period to wait for a matching ping_message
    * to be received
    *
-   *  @return The ping_message received with matching id
-   *  @return null if the timeout expires and no ping_message was received with
-   * a matching id
+   *  @return The ping_message received with matching id, or a nack message if the device nacked the request
+   *  @return null if the timeout expires and no matching ping_message or nack was received
    */
   ping_message* waitMessage(uint16_t id, int timeoutMs = 500);
 
@@ -109,7 +108,7 @@ protected:
    *
    *  @param message: A pointer to the message received from the device
    */
-  virtual void _handleMessage(ping_message* message);
+  virtual void _handleMessage(const ping_message* message);
 
 private:
   PingParser _parser;

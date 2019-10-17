@@ -114,6 +114,18 @@ public:
    */
   bool set_ping_enable(uint8_t ping_enabled, bool verify = true);
 
+  // Device type. 0: Unknown; 1: Echosounder
+  uint8_t device_type = 0;
+
+  // Device model. 0: Unknown; 1: Ping1D
+  uint8_t device_model = 0;
+
+  // Firmware version major number.
+  uint16_t firmware_version_major = 0;
+
+  // Firmware version minor number.
+  uint16_t firmware_version_minor = 0;
+
   // The 5V rail voltage.
   uint16_t voltage_5 = 0;
 
@@ -167,5 +179,5 @@ private:
    *
    *  @param message: A pointer to the message received from the device
    */
-  void _handleMessage(ping_message* message) override;
+  void _handleMessage(const ping_message* message) override;
 };
