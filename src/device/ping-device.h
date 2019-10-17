@@ -30,15 +30,17 @@ public:
     bool initialize();
 
     /**
-     *  @brief Read in data from device, return a PingMessage if available.
+     *  @brief Read in data from device, return a ping_message pointer if available.
      *  Data will be read in from device until there is no data left in the RX
-     * buffer, or a valid PingMessage is successfully decoded. Note that there may
-     * still be data available in the RX buffer for decoding when this function
-     * returns a PingMessage.
+     *  buffer, or a valid ping_message is successfully decoded. Note that there may
+     *  still be data available in the RX buffer for decoding when this function
+     *  returns a ping_message.
      *
-     *  @return: The next PingMessage from the device
-     *  @return: null if the RX buffer is empty and no PingMessage has been
-     * decoded
+     *  @return: A pointer to the next ping_message from the device. The pointer to this message is managed
+     *  by the PingDevice object (the caller should not delete it). The pointer is only valid until the next call to
+     *  read();
+     *  @return: null if the RX buffer is empty and no ping_message has been
+     *  decoded
      */
     ping_message* read();
 
@@ -47,11 +49,13 @@ public:
      *
      *  @param id: The message ID to request
      *  @param timeoutMs: The timeout period to wait for the requested
-     * ping_message to be received
+     *  ping_message to be received
      *
-     *  @return The ping_message that was requested, or a nack message if the device nacked the request
+     *  @return A pointer to the ping_message that was requested, or a nack message if the device nacked the request.
+     *  The pointer to this message is managed by the PingDevice object (the caller should not delete it). The
+     *  pointer is only valid until the next call to read();
      *  @return null if the device did not reply with the requested message or nack before
-     * the timeout period expired
+     *  the timeout period expired
      *
      *  @par ex.
      *  @code
@@ -62,13 +66,15 @@ public:
 
     /**
      *  @brief Wait for receipt of a message with a particular message id from
-     * device
+     *  device
      *
      *  @param id: The message id to wait for
      *  @param timeoutMs: The timeout period to wait for a matching ping_message
-     * to be received
+     *  to be received
      *
-     *  @return The ping_message received with matching id, or a nack message if the device nacked the request
+     *  @return A pointer to the ping_message received with matching id, or a nack message if the device
+     *  nacked the request. The pointer to this message is managed by the PingDevice object (the caller
+     *  should not delete it). The pointer is only valid until the next call to read();
      *  @return null if the timeout expires and no matching ping_message or nack was received
      */
     ping_message* waitMessage(uint16_t id, int timeoutMs = 500);
