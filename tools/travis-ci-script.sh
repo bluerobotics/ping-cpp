@@ -5,7 +5,7 @@ git submodule update --init
 src/generate/generate-message.py --output-dir src/message
 
 echo "Run test.."
-if ! g++ test/test-message.cpp -std=c++11 -pedantic -Wall -Werror -Wshadow -Wnarrowing -Wconversion; then
+if ! g++ test/test-message.cpp -std=c++14 -pedantic -Wall -Werror -Wshadow -Wnarrowing -Wconversion; then
     echo " Failed to compile test-message!"
     exit 1
 fi
