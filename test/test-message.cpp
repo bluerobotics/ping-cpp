@@ -4,10 +4,7 @@
 
 #include <stdio.h>
 #include "../src/message/ping-parser.h"
-#include "../src/message/ping-message.h"
-#include "../src/message/ping-message-common.h"
-#include "../src/message/ping-message-ping1d.h"
-#include "../src/message/ping-message-ping360.h"
+#include "../src/message/ping-message-all.h"
 
 template <class T>
 bool compare(const char* s, T value, T expected);
