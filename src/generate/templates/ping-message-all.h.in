@@ -66,6 +66,8 @@ public:
                 return "Ping1D";
             case(PingDeviceType::PING360):
                 return "Ping360";
+            case(PingDeviceType::PINGHF):
+                return "PingHF";
             default:
                 return "Unregistered";
         }
