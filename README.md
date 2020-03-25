@@ -1,6 +1,6 @@
 # ping-cpp
 
-![](https://travis-ci.com/bluerobotics/ping-cpp.svg?branch=master)
+![[](https://travis-ci.com/bluerobotics/ping-cpp.svg?branch=master)](https://travis-ci.com/github/bluerobotics/ping-cpp)
 
 c++ api implementation of ping-protocol
 
