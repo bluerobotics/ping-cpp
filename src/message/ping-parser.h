@@ -3,6 +3,10 @@
 #include <inttypes.h>
 #include "ping-message.h"
 
+/**
+ * @brief Parser that digests data and notifies owner when something interesting happens
+ *
+ */
 class PingParser
 {
 public:
@@ -10,7 +14,17 @@ public:
     ~PingParser() = default;
 
     ping_message rxMessage; // This message is used as the rx buffer
+
+     /**
+     * @brief Number of messages/packets successfully parsed
+     *
+     */
     uint32_t parsed = 0; // number of messages/packets successfully parsed
+
+     /**
+     * @brief Number of parse errors
+     *
+     */
     uint32_t errors = 0; // number of parse errors
 
     // This enum MUST be contiguous
@@ -39,11 +53,21 @@ private:
     ParseState state_ = ParseState::WAIT_START;
 
 public:
+    /**
+     * @brief Reset parser state
+     *
+     */
     void reset()
     {
         state_ = ParseState::WAIT_START;
     }
 
+    /**
+     * @brief Parse a single byte
+     *
+     * @param b
+     * @return ParseState
+     */
     ParseState parseByte(const uint8_t b)
     {
         switch(state_) {
