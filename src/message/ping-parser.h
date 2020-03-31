@@ -59,72 +59,7 @@ public:
      * @param data
      * @return State
      */
-    PingParser::State parseByte(const uint8_t data)
-    {
-        switch(state_) {
-        case PingParser::State::WAIT_START:
-            rxCount_ = 0;
-            if (data == 'B') {
-                rxBuffer_[rxCount_++] = data;
-                state_++;
-            }
-            break;
-        case PingParser::State::WAIT_HEADER:
-            if (data == 'R') {
-                rxBuffer_[rxCount_++] = data;
-                state_++;
-            } else {
-                reset();
-            }
-            break;
-        case PingParser::State::WAIT_LENGTH_L:
-            rxBuffer_[rxCount_++] = data;
-            payloadLength_ = data;
-            state_++;
-            break;
-        case PingParser::State::WAIT_LENGTH_H:
-            rxBuffer_[rxCount_++] = data;
-            payloadLength_ = static_cast<uint16_t>((data << 8) | payloadLength_);
-            if (payloadLength_ <= rxBufferLength_ - 8 - 2) {
-                state_++;
-            } else {
-                reset();
-            }
-            break;
-        case PingParser::State::WAIT_MSG_ID_L: // fall-through
-        case PingParser::State::WAIT_MSG_ID_H:
-        case PingParser::State::WAIT_SRC_ID:
-        case PingParser::State::WAIT_DST_ID:
-            rxBuffer_[rxCount_++] = data;
-            state_++;
-            if (payloadLength_ == 0) {
-                // no payload bytes, so we skip WAIT_PAYLOAD state
-                state_++;
-            }
-            break;
-        case PingParser::State::WAIT_PAYLOAD:
-            rxBuffer_[rxCount_++] = data;
-            if (--payloadLength_ == 0) {
-                state_++;
-            }
-            break;
-        case PingParser::State::WAIT_CHECKSUM_L:
-            rxBuffer_[rxCount_++] = data;
-            state_++;
-            break;
-        case PingParser::State::WAIT_CHECKSUM_H:
-            rxBuffer_[rxCount_++] = data;
-            state_ = PingParser::State::WAIT_START;
-            if (rxMessage.verifyChecksum()) {
-                parsed++;
-                return PingParser::State::NEW_MESSAGE;
-            } else {
-                errors++;
-                return PingParser::State::ERROR;
-            }
-        }
-        return state_;
-    }
+    PingParser::State parseByte(const uint8_t data);
 
 // variables used for parsing
 private:
@@ -134,3 +69,81 @@ private:
     uint16_t payloadLength_ = 0;
     State state_ = PingParser::State::WAIT_START;
 };
+
+/**
+ * @brief Increate state
+ *
+ * @param state
+ */
+inline void operator++(PingParser::State& state, int) {
+    state = static_cast<PingParser::State>((static_cast<int>(state)) + 1);
+}
+
+inline PingParser::State PingParser::parseByte(const uint8_t data)
+{
+    switch(state_) {
+    case PingParser::State::WAIT_START:
+        rxCount_ = 0;
+        if (data == 'B') {
+            rxBuffer_[rxCount_++] = data;
+            state_++;
+        }
+        break;
+    case PingParser::State::WAIT_HEADER:
+        if (data == 'R') {
+            rxBuffer_[rxCount_++] = data;
+            state_++;
+        } else {
+            reset();
+        }
+        break;
+    case PingParser::State::WAIT_LENGTH_L:
+        rxBuffer_[rxCount_++] = data;
+        payloadLength_ = data;
+        state_++;
+        break;
+    case PingParser::State::WAIT_LENGTH_H:
+        rxBuffer_[rxCount_++] = data;
+        payloadLength_ = static_cast<uint16_t>((data << 8) | payloadLength_);
+        if (payloadLength_ <= rxBufferLength_ - 8 - 2) {
+            state_++;
+        } else {
+            reset();
+        }
+        break;
+    case PingParser::State::WAIT_MSG_ID_L: // fall-through
+    case PingParser::State::WAIT_MSG_ID_H:
+    case PingParser::State::WAIT_SRC_ID:
+    case PingParser::State::WAIT_DST_ID:
+        rxBuffer_[rxCount_++] = data;
+        state_++;
+        if (payloadLength_ == 0) {
+            // no payload bytes, so we skip WAIT_PAYLOAD state
+            state_++;
+        }
+        break;
+    case PingParser::State::WAIT_PAYLOAD:
+        rxBuffer_[rxCount_++] = data;
+        if (--payloadLength_ == 0) {
+            state_++;
+        }
+        break;
+    case PingParser::State::WAIT_CHECKSUM_L:
+        rxBuffer_[rxCount_++] = data;
+        state_++;
+        break;
+    case PingParser::State::WAIT_CHECKSUM_H:
+        rxBuffer_[rxCount_++] = data;
+        state_ = PingParser::State::WAIT_START;
+        if (rxMessage.verifyChecksum()) {
+            parsed++;
+            return PingParser::State::NEW_MESSAGE;
+        } else {
+            errors++;
+            return PingParser::State::ERROR;
+        }
+    default:
+        return state_;
+    }
+    return state_;
+}
