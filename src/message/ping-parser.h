@@ -70,6 +70,39 @@ private:
     State state_ = PingParser::State::WAIT_START;
 };
 
+static const char* PINGPARSER_STATE_TO_STRING(PingParser::State state) {
+    switch(state) {
+        case PingParser::State::NEW_MESSAGE:
+            return "NEW_MESSAGE";
+        case PingParser::State::WAIT_START:
+            return "WAIT_START";
+        case PingParser::State::WAIT_HEADER:
+            return "WAIT_HEADER";
+        case PingParser::State::WAIT_LENGTH_L:
+            return "WAIT_LENGTH_L";
+        case PingParser::State::WAIT_LENGTH_H:
+            return "WAIT_LENGTH_H";
+        case PingParser::State::WAIT_MSG_ID_L:
+            return "WAIT_MSG_ID_L";
+        case PingParser::State::WAIT_MSG_ID_H:
+            return "WAIT_MSG_ID_H";
+        case PingParser::State::WAIT_SRC_ID:
+            return "WAIT_SRC_ID";
+        case PingParser::State::WAIT_DST_ID:
+            return "WAIT_DST_ID";
+        case PingParser::State::WAIT_PAYLOAD:
+            return "WAIT_PAYLOAD";
+        case PingParser::State::WAIT_CHECKSUM_L:
+            return "WAIT_CHECKSUM_L";
+        case PingParser::State::WAIT_CHECKSUM_H:
+            return "WAIT_CHECKSUM_H";
+        case PingParser::State::ERROR:
+            return "ERROR";
+        default:
+            return "UNKNOWN";
+    };
+}
+
 /**
  * @brief Increate state
  *
