@@ -133,7 +133,7 @@ bool testProtocolVersion()
 
     PingParser p;
     for (uint8_t i = 0; i < protocol_version_msg_length; i++) {
-        printf("parse state: %d\n", p.parseByte(test.data[i]));
+        printf("parse state: %s\n", PINGPARSER_STATE_TO_STRING(p.parseByte(test.data[i])));
     }
 
     result |= verifyProtocolMessage(p.rxMessage, test.fields);
@@ -247,7 +247,7 @@ bool testProfile()
 
     PingParser p(512); // parser buffer length must be large enough
     for (uint32_t i = 0; i < profile_msg_length; i++) {
-        printf("parse state: %d\n", p.parseByte(test.data[i]));
+        printf("parse state: %s\n", PINGPARSER_STATE_TO_STRING(p.parseByte(test.data[i])));
     }
 
     result |= verifyProfileMessage(p.rxMessage, test.fields);
