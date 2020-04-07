@@ -51,13 +51,13 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>({{total_payload}}
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>({{total_payload}}
 {%- for payload in m.payload %}
 {% if generator.is_vector(payload.type) %}
  + {{payload.name}}_length
 {%- endif %}
 {% endfor %}); // payload size
-        (uint16_t&)msgData[4] = {{m.id}}; // ID
+        reinterpret_cast<uint16_t&>(msgData[4]) = {{m.id}}; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
@@ -67,16 +67,16 @@ public:
 {% for payload in m.payload %}
 {% if generator.is_vector(payload.type) %}
 {% if payload.vector.sizetype %}
-    {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length() const { return ({{generator.get_type_string(payload.vector.sizetype)}}&)msgData[headerLength + {{byte.offset}}]; }
+    {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length() const { return reinterpret_cast<{{generator.get_type_string(payload.vector.sizetype)}}&>(msgData[headerLength + {{byte.offset}}]); }
     //TODO do this in constructor (const)
-    void set_{{payload.name}}_length(const {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length) { ({{generator.get_type_string(payload.vector.sizetype)}}&)msgData[headerLength + {{byte.offset}}] = {{payload.name}}_length;}
+    void set_{{payload.name}}_length(const {{generator.get_type_string(payload.vector.sizetype)}} {{payload.name}}_length) { reinterpret_cast<{{generator.get_type_string(payload.vector.sizetype)}}&>(msgData[headerLength + {{byte.offset}}]) = {{payload.name}}_length;}
 {% set byte.offset = byte.offset + generator.get_c_size(payload.vector.sizetype) %}
 {% endif %}
-    {{generator.get_type_string(payload.vector.datatype)}}* {{payload.name}}() const { return ({{generator.get_type_string(payload.vector.datatype)}}*)(msgData+headerLength+{{byte.offset}}); }
-    void set_{{payload.name}}_at(const uint16_t i, const {{generator.get_type_string(payload.vector.datatype)}} data) { ({{generator.get_type_string(payload.vector.datatype)}}&)msgData[headerLength + {{byte.offset}} + i] = data; }
+    {{generator.get_type_string(payload.vector.datatype)}}* {{payload.name}}() const { return reinterpret_cast<{{generator.get_type_string(payload.vector.datatype)}}*>(msgData+headerLength+{{byte.offset}}); }
+    void set_{{payload.name}}_at(const uint16_t i, const {{generator.get_type_string(payload.vector.datatype)}} data) { reinterpret_cast<{{generator.get_type_string(payload.vector.datatype)}}&>(msgData[headerLength + {{byte.offset}} + i]) = data; }
 {% else %}
-    {{generator.get_type_string(payload.type)}} {{payload.name}}() const { return ({{generator.get_type_string(payload.type)}}&)msgData[headerLength + {{byte.offset}}]; }
-    void set_{{payload.name}}(const {{generator.get_type_string(payload.type)}} {{payload.name}}) { ({{generator.get_type_string(payload.type)}}&)msgData[headerLength + {{byte.offset}}] = {{payload.name}}; }
+    {{generator.get_type_string(payload.type)}} {{payload.name}}() const { return reinterpret_cast<{{generator.get_type_string(payload.type)}}&>(msgData[headerLength + {{byte.offset}}]); }
+    void set_{{payload.name}}(const {{generator.get_type_string(payload.type)}} {{payload.name}}) { reinterpret_cast<{{generator.get_type_string(payload.type)}}&>(msgData[headerLength + {{byte.offset}}] = {{payload.name}}); }
 {% set byte.offset = byte.offset + generator.get_c_size(payload.type) %}
 {% endif %}
 {% endfor %}

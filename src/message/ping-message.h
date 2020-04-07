@@ -12,14 +12,14 @@ public:
 
     ping_message(const ping_message &msg)
         : _bufferLength { msg.msgDataLength() }
-        , msgData { (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength) }
+        , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
     {
         memcpy(msgData, msg.msgData, _bufferLength);
     }
 
     ping_message(const uint16_t bufferLength)
         : _bufferLength { bufferLength }
-        , msgData { (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength) }
+        , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
     {
         if (bufferLength >= 2) {
             msgData[0] = 'B';
@@ -29,7 +29,7 @@ public:
 
     ping_message(const uint8_t* buf, const uint16_t length)
         : _bufferLength { length }
-        , msgData { (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength) }
+        , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
     {
         memcpy(msgData, buf, _bufferLength);
     }
@@ -37,7 +37,7 @@ public:
     ping_message& operator = (const ping_message &msg) {
         _bufferLength = msg.msgDataLength();
         if(msgData) free(msgData);
-        msgData = (uint8_t*)malloc(sizeof(uint8_t) * _bufferLength);
+        msgData = static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength));
         memcpy(msgData, msg.msgData, _bufferLength);
         return *this;
     }
@@ -57,10 +57,10 @@ public:
     uint8_t* message_data(uint32_t offset=0) const { return msgData + offset; }
     uint8_t* payload_data(uint16_t offset=0) const { return msgData + headerLength + offset; }
 
-    uint16_t payload_length()                const { return (uint16_t&)msgData[2]; }
-    void set_payload_length(const uint16_t payload_length) { (uint16_t&)msgData[2] = payload_length; }
-    uint16_t message_id()                    const { return (uint16_t&)msgData[4]; }
-    void set_message_id(const uint16_t message_id) { (uint16_t&)msgData[4] = message_id; }
+    uint16_t payload_length()                const { return reinterpret_cast<uint16_t&>(msgData[2]); }
+    void set_payload_length(const uint16_t payload_length) { reinterpret_cast<uint16_t&>(msgData[2]) = payload_length; }
+    uint16_t message_id()                    const { return reinterpret_cast<uint16_t&>(msgData[4]); }
+    void set_message_id(const uint16_t message_id) { reinterpret_cast<uint16_t&>(msgData[4]) = message_id; }
     uint8_t  source_device_id()              const { return msgData[6]; }
     void set_source_device_id(const uint8_t device_id) { msgData[6] = device_id; }
     uint8_t  destination_device_id()         const { return msgData[7]; }
