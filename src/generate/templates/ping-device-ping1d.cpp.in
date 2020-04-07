@@ -1,0 +1,95 @@
+#include "ping-device-ping1d.h"
+#include <ping-message-common.h>
+#include <ping-message-ping1d.h>
+
+Ping1d::~Ping1d()
+{
+{% for msg in messages["get"]|sort %}
+{% for field in messages["get"][msg].payload %}
+{% if generator.is_vector(field.type) %}
+    if ({{field.name}}) {
+        delete[] {{field.name}};
+    }
+{% endif %}
+{% endfor %}
+{% endfor %}
+}
+
+bool Ping1d::initialize(uint16_t pingIntervalMs)
+{
+    if (!PingDevice::initialize()) {
+        return false;
+    }
+
+    // Configure ping interval
+    if (!set_ping_interval(pingIntervalMs)) {
+        return false;
+    }
+
+    return true;
+}
+
+void Ping1d::_handleMessage(const ping_message* message)
+{
+    switch (message->message_id()) {
+{% for msg in messages["get"]|sort %}
+{% if not messages["get"][msg].deprecated %}
+        case Ping1dId::{{msg|upper}}:
+        {
+            const ping1d_{{msg}}* message_{{msg}} = static_cast<const ping1d_{{msg}}*>(message);
+{% for field in messages["get"][msg].payload %}
+{% if generator.is_vector(field.type) %}
+            if (message_{{msg}}->{{field.name}}_length() > {{field.name}}_length) {
+                if ({{field.name}}) {
+                    delete[] {{field.name}};
+                }
+                {{field.name}} = new {{generator.get_type_string(field.vector.datatype)}}[message_{{msg}}->{{field.name}}_length()];
+            }
+
+            // If pointer is invalid, make sure to abort, there is no more memory!
+            if (profile_data == nullptr) {
+                {{field.name}}_length = -1;
+                return;
+            }
+
+            {{field.name}}_length = message_{{msg}}->{{field.name}}_length();
+            memcpy({{field.name}}, message_{{msg}}->{{field.name}}(), message_{{msg}}->{{field.name}}_length());
+{% else %}
+            {{field.name}} = message_{{msg}}->{{field.name}}();
+{% endif %}
+{% endfor %}
+        }
+        break;
+{% endif %}
+{% endfor %}
+
+        default:
+            break;
+    }
+
+    PingDevice::_handleMessage(message);
+}
+
+{% for msg in messages["set"]|sort %}
+bool Ping1d::{{msg}}({% for field in messages["set"][msg].payload %}{{generator.get_type_string(field.type)}} _{{field.name}}, {% endfor %}bool verify)
+{
+    ping1d_{{msg}} message;
+{% for field in messages["set"][msg].payload %}
+    message.set_{{field.name}}(_{{field.name}});
+{% endfor %}
+    writeMessage(message);
+    // Check if we have a reply from the device
+    if (!request(Ping1dId::{{msg|replace("set_", "")|upper}})) {
+        return false;
+    }
+    // Read back the data and check that changes have been applied
+    if (verify
+{% if messages["set"][msg].payload %}
+        && ({% for field in messages["set"][msg].payload %}{{field.name}} != _{{field.name}}{{ "\n        || " if not loop.last }}{% endfor %})) {
+{% endif %}
+        return false;
+    }
+    return true;
+}
+
+{% endfor %}
