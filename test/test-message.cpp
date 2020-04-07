@@ -2,12 +2,12 @@
 // Test creating ping_message object from byte array (receive)
 // Test creating byte array from ping_message object (transmit)
 
-#include <stdio.h>
-#include "../src/message/ping-parser.h"
-#include "../src/message/ping-message-all.h"
+#include <ping-message-all.h>
+#include <ping-parser.h>
 
-template <class T>
-bool compare(const char* s, T value, T expected);
+#include <cstdio>
+
+template <class T> bool compare(const char* s, T value, T expected);
 
 static const uint8_t header_length = 8;
 static const uint8_t checksum_length = 2;
@@ -24,7 +24,7 @@ bool testProtocolVersion();
 ///////////////
 ///// ping1d
 ///////////////
-static const uint16_t profile_static_payload_length = 4+2+2+4+4+4+4+2;
+static const uint16_t profile_static_payload_length = 4 + 2 + 2 + 4 + 4 + 4 + 4 + 2;
 static const uint16_t profile_points = 10;
 static const uint16_t profile_payload_length = profile_static_payload_length + profile_points;
 static const uint32_t profile_msg_length = header_length + profile_payload_length + checksum_length;
@@ -41,8 +41,7 @@ int main(void)
     return ret;
 }
 
-template <class T>
-bool compare(const char* s, T value, T expected)
+template <class T> bool compare(const char* s, T value, T expected)
 {
     printf("%s: %d expected: %d\n", s, value, expected);
     if (value != expected) {
@@ -52,8 +51,7 @@ bool compare(const char* s, T value, T expected)
     return false;
 }
 
-struct test_protocol_version_s
-{
+struct test_protocol_version_s {
     uint8_t start1;
     uint8_t start2;
     uint16_t payload_length;
@@ -68,7 +66,7 @@ struct test_protocol_version_s
     uint8_t reserved;
 
     uint16_t checksum;
-}__attribute__((packed));
+} __attribute__((packed));
 
 bool verifyProtocolMessage(common_protocol_version m, test_protocol_version_s t)
 {
@@ -106,11 +104,10 @@ bool testProtocolVersion()
         uint8_t data[protocol_version_msg_length];
     } test;
 
-
     printf("Testing byte array to object conversion...\n\n");
 
-    //TODO test all constructors
-    //TODO test dynamic arrays, implicit and explicit length
+    // TODO test all constructors
+    // TODO test dynamic arrays, implicit and explicit length
     common_protocol_version test_in(test.data, protocol_version_msg_length);
 
     result |= verifyProtocolMessage(test_in, test.fields);
@@ -133,7 +130,7 @@ bool testProtocolVersion()
     printf("\ntesting parser...\n\n");
 
     PingParser p;
-    for(uint8_t i = 0; i < protocol_version_msg_length; i++) {
+    for (uint8_t i = 0; i < protocol_version_msg_length; i++) {
         printf("parse state: %d\n", p.parseByte(test.data[i]));
     }
 
@@ -142,8 +139,7 @@ bool testProtocolVersion()
     return result;
 }
 
-struct test_profile_s
-{
+struct test_profile_s {
     uint8_t start1;
     uint8_t start2;
     uint16_t payload_length;
@@ -160,9 +156,9 @@ struct test_profile_s
     uint32_t scan_length;
     uint32_t gain_setting;
     uint16_t profile_data_length;
-    uint8_t  profile_data[profile_points];
+    uint8_t profile_data[profile_points];
     uint16_t checksum;
-}__attribute__((packed));
+} __attribute__((packed));
 
 bool verifyProfileMessage(ping1d_profile m, test_profile_s t)
 {
@@ -216,8 +212,8 @@ bool testProfile()
 
     printf("Testing byte array to object conversion...\n\n");
 
-    //TODO test all constructors
-    //TODO test dynamic arrays, implicit and explicit length
+    // TODO test all constructors
+    // TODO test dynamic arrays, implicit and explicit length
     ping1d_profile test_in(test.data, profile_msg_length);
 
     result |= verifyProfileMessage(test_in, test.fields);
@@ -248,7 +244,7 @@ bool testProfile()
     printf("\ntesting parser...\n\n");
 
     PingParser p(512); // parser buffer length must be large enough
-    for(uint32_t i = 0; i < profile_msg_length; i++) {
+    for (uint32_t i = 0; i < profile_msg_length; i++) {
         printf("parse state: %d\n", p.parseByte(test.data[i]));
     }
 
