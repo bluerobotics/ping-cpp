@@ -1,0 +1,37 @@
+name: Linux hardware test
+
+on:
+  push:
+    branches: [ master, potato ]
+  pull_request:
+    branches: [ master, potato ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Install necessary tools
+      run: |
+        rm -rf /etc/apt/trusted.gpg
+        sudo apt -y update
+        sudo apt -y update
+        sudo apt -y install cmake libboost-all-dev
+        sudo apt -y install python3-pip python3-setuptools
+        sudo pip3 install jinja2
+
+    - name: Build it
+      run: |
+        git submodule update --init --recursive
+        mkdir build && cd build
+        cmake ..
+        cmake --build .
+
+    - name: Run tests
+      run: |
+        cd build
+        ./test-message
+        ls -ls /dev/ttyUSB*
+        for device in /dev/ttyUSB*; do $PWD/test-device --conn serial:$device:115200; done
