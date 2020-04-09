@@ -81,6 +81,37 @@ public:
 {% endif %}
 {% endfor %}
 {% endif %}
+{% if m.payload %}
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+{% for payload in m.payload %}
+{% if generator.is_vector(payload.type) %}
+{% if payload.vector.sizetype %}
+{% else %}
+                "  {{payload.name}}: %s\n"
+{% endif %}
+{% else %}
+                "  {{payload.name}}: %d\n"
+{% endif %}
+{% endfor %}
+{% for payload in m.payload %}
+{% if generator.is_vector(payload.type) %}
+{% if payload.vector.sizetype %}
+{% else %}
+                , {{payload.name}}()
+{% endif %}
+{% else %}
+                , {{payload.name}}()
+{% endif %}
+{% endfor %}
+            );
+        }
+        return written;
+    }
+{% endif %}
 };
 
 {% endfor %}
