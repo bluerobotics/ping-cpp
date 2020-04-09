@@ -25,6 +25,7 @@ target_link_libraries(
     DEVICE
 PRIVATE
     HAL
+    PING_MESSAGES
 )
 
 target_include_directories(
