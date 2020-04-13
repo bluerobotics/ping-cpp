@@ -3,8 +3,11 @@
 #include <ping-message-all.h>
 
 #include "command-line/command-line.h"
+#include "helper.h"
 
 #include <cstdio>
+
+typedef PingDeviceTest::Status Status;
 
 /**
  * @brief Test generic ping devices
@@ -18,33 +21,24 @@ int main(int argc, char* argv[])
     auto port = AbstractLink::openUrl(CommandLine::self()->connectionString);
     PingDevice device = PingDevice(*port.get());
 
-    printf("initializing\n");
+    // Basic information
+    PingDeviceTest::test("Device initialization", device.initialize());
+    PingDeviceTest::test("Device type", static_cast<int>(PingDeviceType::UNKNOWN) < device.device_information.device_type, Status::OK);
+    std::cout << "Device detected as: " << PingHelper::nameFromDeviceType(static_cast<PingDeviceType>(device.device_information.device_type)) << std::endl;
+    PingDeviceTest::test("Device ID", device.device_id != 0, Status::OK);
 
-    if (!device.initialize()) {
-        printf("device initialization failed\n");
-    } else {
-        printf("pass\n");
-        printf("Device Type %d id %d hardware revision %d\n", device.device_type, device.device_id,
-            device.device_revision);
-        printf("Ping Protocol v%d.%d.%d\n", device.version_major, device.version_minor, device.version_patch);
-        printf("Device Firmware v%d.%d.%d\n", device.firmware_version_major, device.firmware_version_minor,
-            device.firmware_version_patch);
-    }
-
-    auto testRequest = [&device](uint16_t msgId, const char* message = nullptr) {
-        printf("requesting message: %s\n",
-            message ? message : PingHelper::nameFromMessageId(static_cast<PingEnumNamespace::PingMessageId>(msgId)));
-        if (!device.request(msgId, 1000)) {
-            printf("fail\n");
-            return false;
-        }
-
-        printf("pass\n");
-        return true;
-    };
-
-    testRequest(CommonId::PROTOCOL_VERSION);
-    testRequest(CommonId::DEVICE_INFORMATION);
+    // Common messages validation
+    PingDeviceTest::test("Device Hardware revision", device.device_information.device_revision, Status::OK);
+    PingDeviceTest::test(
+        "Protocol version",
+        device.protocol_version.version_major == 1 && device.protocol_version.version_minor == 0 && device.protocol_version.version_patch == 0,
+        Status::OK
+    );
+    PingDeviceTest::test(
+        "Firmware version",
+        device.device_information.firmware_version_major != 0 || device.device_information.firmware_version_minor != 0 || device.device_information.firmware_version_patch != 0,
+        Status::OK
+    );
 
     return 0;
 }
