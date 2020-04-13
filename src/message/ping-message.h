@@ -4,6 +4,7 @@
 #include <inttypes.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 class ping_message
 {
@@ -88,5 +89,19 @@ public:
             calculatedChecksum = static_cast<uint16_t>(msgData[i] + calculatedChecksum);
         }
         return calculatedChecksum;
+    }
+
+    int getMessageAsString(char* string, size_t size) const {
+        return snprintf(string, size,
+            "ping_message:\n"
+            " payload_length: %d\n"
+            " message_id: %d\n"
+            " src_device_id: %d\n"
+            " dst_device_id: %d\n"
+            , payload_length()
+            , message_id()
+            , source_device_id()
+            , destination_device_id()
+        );
     }
 };

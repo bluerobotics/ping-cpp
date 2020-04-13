@@ -40,6 +40,19 @@ public:
     void set_id(const uint8_t id) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = id); }
     uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 1]); }
     void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 1] = reserved); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  id: %d\n"
+                "  reserved: %d\n"
+                , id()
+                , reserved()
+            );
+        }
+        return written;
+    }
 };
 
 class ping360_device_data : public ping_message
@@ -77,6 +90,29 @@ public:
     void set_data_length(const uint16_t data_length) { reinterpret_cast<uint16_t&>(msgData[headerLength + 12]) = data_length;}
     uint8_t* data() const { return reinterpret_cast<uint8_t*>(msgData+headerLength+14); }
     void set_data_at(const uint16_t i, const uint8_t data) { reinterpret_cast<uint8_t&>(msgData[headerLength + 14 + i]) = data; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  mode: %d\n"
+                "  gain_setting: %d\n"
+                "  angle: %d\n"
+                "  transmit_duration: %d\n"
+                "  sample_period: %d\n"
+                "  transmit_frequency: %d\n"
+                "  number_of_samples: %d\n"
+                , mode()
+                , gain_setting()
+                , angle()
+                , transmit_duration()
+                , sample_period()
+                , transmit_frequency()
+                , number_of_samples()
+            );
+        }
+        return written;
+    }
 };
 
 class ping360_auto_device_data : public ping_message
@@ -122,6 +158,37 @@ public:
     void set_data_length(const uint16_t data_length) { reinterpret_cast<uint16_t&>(msgData[headerLength + 18]) = data_length;}
     uint8_t* data() const { return reinterpret_cast<uint8_t*>(msgData+headerLength+20); }
     void set_data_at(const uint16_t i, const uint8_t data) { reinterpret_cast<uint8_t&>(msgData[headerLength + 20 + i]) = data; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  mode: %d\n"
+                "  gain_setting: %d\n"
+                "  angle: %d\n"
+                "  transmit_duration: %d\n"
+                "  sample_period: %d\n"
+                "  transmit_frequency: %d\n"
+                "  start_angle: %d\n"
+                "  stop_angle: %d\n"
+                "  num_steps: %d\n"
+                "  delay: %d\n"
+                "  number_of_samples: %d\n"
+                , mode()
+                , gain_setting()
+                , angle()
+                , transmit_duration()
+                , sample_period()
+                , transmit_frequency()
+                , start_angle()
+                , stop_angle()
+                , num_steps()
+                , delay()
+                , number_of_samples()
+            );
+        }
+        return written;
+    }
 };
 
 class ping360_reset : public ping_message
@@ -143,6 +210,19 @@ public:
     void set_bootloader(const uint8_t bootloader) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = bootloader); }
     uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 1]); }
     void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 1] = reserved); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  bootloader: %d\n"
+                "  reserved: %d\n"
+                , bootloader()
+                , reserved()
+            );
+        }
+        return written;
+    }
 };
 
 class ping360_transducer : public ping_message
@@ -178,6 +258,33 @@ public:
     void set_transmit(const uint8_t transmit) { reinterpret_cast<uint8_t&>(msgData[headerLength + 12] = transmit); }
     uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 13]); }
     void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 13] = reserved); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  mode: %d\n"
+                "  gain_setting: %d\n"
+                "  angle: %d\n"
+                "  transmit_duration: %d\n"
+                "  sample_period: %d\n"
+                "  transmit_frequency: %d\n"
+                "  number_of_samples: %d\n"
+                "  transmit: %d\n"
+                "  reserved: %d\n"
+                , mode()
+                , gain_setting()
+                , angle()
+                , transmit_duration()
+                , sample_period()
+                , transmit_frequency()
+                , number_of_samples()
+                , transmit()
+                , reserved()
+            );
+        }
+        return written;
+    }
 };
 
 class ping360_auto_transmit : public ping_message
@@ -215,6 +322,35 @@ public:
     void set_num_steps(const uint8_t num_steps) { reinterpret_cast<uint8_t&>(msgData[headerLength + 14] = num_steps); }
     uint8_t delay() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 15]); }
     void set_delay(const uint8_t delay) { reinterpret_cast<uint8_t&>(msgData[headerLength + 15] = delay); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  mode: %d\n"
+                "  gain_setting: %d\n"
+                "  transmit_duration: %d\n"
+                "  sample_period: %d\n"
+                "  transmit_frequency: %d\n"
+                "  number_of_samples: %d\n"
+                "  start_angle: %d\n"
+                "  stop_angle: %d\n"
+                "  num_steps: %d\n"
+                "  delay: %d\n"
+                , mode()
+                , gain_setting()
+                , transmit_duration()
+                , sample_period()
+                , transmit_frequency()
+                , number_of_samples()
+                , start_angle()
+                , stop_angle()
+                , num_steps()
+                , delay()
+            );
+        }
+        return written;
+    }
 };
 
 class ping360_motor_off : public ping_message

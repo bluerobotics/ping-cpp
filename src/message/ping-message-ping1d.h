@@ -57,6 +57,17 @@ public:
 
     uint8_t device_id() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_device_id(const uint8_t device_id) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = device_id); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  device_id: %d\n"
+                , device_id()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_set_range : public ping_message
@@ -78,6 +89,19 @@ public:
     void set_scan_start(const uint32_t scan_start) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = scan_start); }
     uint32_t scan_length() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 4]); }
     void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 4] = scan_length); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  scan_start: %d\n"
+                "  scan_length: %d\n"
+                , scan_start()
+                , scan_length()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_set_speed_of_sound : public ping_message
@@ -97,6 +121,17 @@ public:
 
     uint32_t speed_of_sound() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
     void set_speed_of_sound(const uint32_t speed_of_sound) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = speed_of_sound); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  speed_of_sound: %d\n"
+                , speed_of_sound()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_set_mode_auto : public ping_message
@@ -116,6 +151,17 @@ public:
 
     uint8_t mode_auto() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_mode_auto(const uint8_t mode_auto) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = mode_auto); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  mode_auto: %d\n"
+                , mode_auto()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_set_ping_interval : public ping_message
@@ -135,6 +181,17 @@ public:
 
     uint16_t ping_interval() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_ping_interval(const uint16_t ping_interval) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = ping_interval); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  ping_interval: %d\n"
+                , ping_interval()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_set_gain_setting : public ping_message
@@ -154,6 +211,17 @@ public:
 
     uint8_t gain_setting() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_gain_setting(const uint8_t gain_setting) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = gain_setting); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  gain_setting: %d\n"
+                , gain_setting()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_set_ping_enable : public ping_message
@@ -173,6 +241,17 @@ public:
 
     uint8_t ping_enabled() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_ping_enabled(const uint8_t ping_enabled) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = ping_enabled); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  ping_enabled: %d\n"
+                , ping_enabled()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_firmware_version : public ping_message
@@ -198,6 +277,23 @@ public:
     void set_firmware_version_major(const uint16_t firmware_version_major) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = firmware_version_major); }
     uint16_t firmware_version_minor() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
     void set_firmware_version_minor(const uint16_t firmware_version_minor) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = firmware_version_minor); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  device_type: %d\n"
+                "  device_model: %d\n"
+                "  firmware_version_major: %d\n"
+                "  firmware_version_minor: %d\n"
+                , device_type()
+                , device_model()
+                , firmware_version_major()
+                , firmware_version_minor()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_device_id : public ping_message
@@ -217,6 +313,17 @@ public:
 
     uint8_t device_id() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_device_id(const uint8_t device_id) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = device_id); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  device_id: %d\n"
+                , device_id()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_voltage_5 : public ping_message
@@ -236,6 +343,17 @@ public:
 
     uint16_t voltage_5() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_voltage_5(const uint16_t voltage_5) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = voltage_5); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  voltage_5: %d\n"
+                , voltage_5()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_speed_of_sound : public ping_message
@@ -255,6 +373,17 @@ public:
 
     uint32_t speed_of_sound() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
     void set_speed_of_sound(const uint32_t speed_of_sound) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = speed_of_sound); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  speed_of_sound: %d\n"
+                , speed_of_sound()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_range : public ping_message
@@ -276,6 +405,19 @@ public:
     void set_scan_start(const uint32_t scan_start) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = scan_start); }
     uint32_t scan_length() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 4]); }
     void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 4] = scan_length); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  scan_start: %d\n"
+                "  scan_length: %d\n"
+                , scan_start()
+                , scan_length()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_mode_auto : public ping_message
@@ -295,6 +437,17 @@ public:
 
     uint8_t mode_auto() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_mode_auto(const uint8_t mode_auto) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = mode_auto); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  mode_auto: %d\n"
+                , mode_auto()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_ping_interval : public ping_message
@@ -314,6 +467,17 @@ public:
 
     uint16_t ping_interval() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_ping_interval(const uint16_t ping_interval) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = ping_interval); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  ping_interval: %d\n"
+                , ping_interval()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_gain_setting : public ping_message
@@ -333,6 +497,17 @@ public:
 
     uint32_t gain_setting() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
     void set_gain_setting(const uint32_t gain_setting) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = gain_setting); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  gain_setting: %d\n"
+                , gain_setting()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_transmit_duration : public ping_message
@@ -352,6 +527,17 @@ public:
 
     uint16_t transmit_duration() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_transmit_duration(const uint16_t transmit_duration) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = transmit_duration); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  transmit_duration: %d\n"
+                , transmit_duration()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_general_info : public ping_message
@@ -381,6 +567,27 @@ public:
     void set_gain_setting(const uint8_t gain_setting) { reinterpret_cast<uint8_t&>(msgData[headerLength + 8] = gain_setting); }
     uint8_t mode_auto() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 9]); }
     void set_mode_auto(const uint8_t mode_auto) { reinterpret_cast<uint8_t&>(msgData[headerLength + 9] = mode_auto); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  firmware_version_major: %d\n"
+                "  firmware_version_minor: %d\n"
+                "  voltage_5: %d\n"
+                "  ping_interval: %d\n"
+                "  gain_setting: %d\n"
+                "  mode_auto: %d\n"
+                , firmware_version_major()
+                , firmware_version_minor()
+                , voltage_5()
+                , ping_interval()
+                , gain_setting()
+                , mode_auto()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_distance_simple : public ping_message
@@ -402,6 +609,19 @@ public:
     void set_distance(const uint32_t distance) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = distance); }
     uint8_t confidence() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 4]); }
     void set_confidence(const uint8_t confidence) { reinterpret_cast<uint8_t&>(msgData[headerLength + 4] = confidence); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  distance: %d\n"
+                "  confidence: %d\n"
+                , distance()
+                , confidence()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_distance : public ping_message
@@ -433,6 +653,29 @@ public:
     void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 16] = scan_length); }
     uint32_t gain_setting() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 20]); }
     void set_gain_setting(const uint32_t gain_setting) { reinterpret_cast<uint32_t&>(msgData[headerLength + 20] = gain_setting); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  distance: %d\n"
+                "  confidence: %d\n"
+                "  transmit_duration: %d\n"
+                "  ping_number: %d\n"
+                "  scan_start: %d\n"
+                "  scan_length: %d\n"
+                "  gain_setting: %d\n"
+                , distance()
+                , confidence()
+                , transmit_duration()
+                , ping_number()
+                , scan_start()
+                , scan_length()
+                , gain_setting()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_processor_temperature : public ping_message
@@ -452,6 +695,17 @@ public:
 
     uint16_t processor_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_processor_temperature(const uint16_t processor_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = processor_temperature); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  processor_temperature: %d\n"
+                , processor_temperature()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_pcb_temperature : public ping_message
@@ -471,6 +725,17 @@ public:
 
     uint16_t pcb_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_pcb_temperature(const uint16_t pcb_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = pcb_temperature); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  pcb_temperature: %d\n"
+                , pcb_temperature()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_ping_enable : public ping_message
@@ -490,6 +755,17 @@ public:
 
     uint8_t ping_enabled() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_ping_enabled(const uint8_t ping_enabled) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = ping_enabled); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  ping_enabled: %d\n"
+                , ping_enabled()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_profile : public ping_message
@@ -527,6 +803,29 @@ public:
     void set_profile_data_length(const uint16_t profile_data_length) { reinterpret_cast<uint16_t&>(msgData[headerLength + 24]) = profile_data_length;}
     uint8_t* profile_data() const { return reinterpret_cast<uint8_t*>(msgData+headerLength+26); }
     void set_profile_data_at(const uint16_t i, const uint8_t data) { reinterpret_cast<uint8_t&>(msgData[headerLength + 26 + i]) = data; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  distance: %d\n"
+                "  confidence: %d\n"
+                "  transmit_duration: %d\n"
+                "  ping_number: %d\n"
+                "  scan_start: %d\n"
+                "  scan_length: %d\n"
+                "  gain_setting: %d\n"
+                , distance()
+                , confidence()
+                , transmit_duration()
+                , ping_number()
+                , scan_start()
+                , scan_length()
+                , gain_setting()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_goto_bootloader : public ping_message
@@ -563,6 +862,17 @@ public:
 
     uint16_t id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_id(const uint16_t id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = id); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  id: %d\n"
+                , id()
+            );
+        }
+        return written;
+    }
 };
 
 class ping1d_continuous_stop : public ping_message
@@ -582,5 +892,16 @@ public:
 
     uint16_t id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_id(const uint16_t id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = id); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  id: %d\n"
+                , id()
+            );
+        }
+        return written;
+    }
 };
 

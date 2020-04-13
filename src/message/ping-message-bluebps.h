@@ -51,6 +51,17 @@ public:
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  limit: %d\n"
+                , limit()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_cell_voltage_timeout : public ping_message
@@ -70,6 +81,17 @@ public:
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  timeout: %d\n"
+                , timeout()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_current_max : public ping_message
@@ -89,6 +111,17 @@ public:
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  limit: %d\n"
+                , limit()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_current_timeout : public ping_message
@@ -108,6 +141,17 @@ public:
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  timeout: %d\n"
+                , timeout()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_temperature_max : public ping_message
@@ -127,6 +171,17 @@ public:
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  limit: %d\n"
+                , limit()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_temperature_timeout : public ping_message
@@ -146,6 +201,17 @@ public:
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  timeout: %d\n"
+                , timeout()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_stream_rate : public ping_message
@@ -165,6 +231,17 @@ public:
 
     uint32_t rate() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
     void set_rate(const uint32_t rate) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = rate); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  rate: %d\n"
+                , rate()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_lpf_sample_frequency : public ping_message
@@ -184,6 +261,17 @@ public:
 
     uint32_t sample_frequency() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
     void set_sample_frequency(const uint32_t sample_frequency) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = sample_frequency); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  sample_frequency: %d\n"
+                , sample_frequency()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_set_lpf_setting : public ping_message
@@ -203,6 +291,17 @@ public:
 
     uint16_t setting() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_setting(const uint16_t setting) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = setting); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  setting: %d\n"
+                , setting()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_cell_voltage_min : public ping_message
@@ -222,6 +321,17 @@ public:
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  limit: %d\n"
+                , limit()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_cell_timeout : public ping_message
@@ -241,6 +351,17 @@ public:
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  timeout: %d\n"
+                , timeout()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_current_max : public ping_message
@@ -260,6 +381,17 @@ public:
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  limit: %d\n"
+                , limit()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_current_timeout : public ping_message
@@ -279,6 +411,17 @@ public:
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  timeout: %d\n"
+                , timeout()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_temperature_max : public ping_message
@@ -298,6 +441,17 @@ public:
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  limit: %d\n"
+                , limit()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_temperature_timeout : public ping_message
@@ -317,6 +471,17 @@ public:
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  timeout: %d\n"
+                , timeout()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_state : public ping_message
@@ -350,6 +515,25 @@ public:
     void set_cell_voltages_length(const uint8_t cell_voltages_length) { reinterpret_cast<uint8_t&>(msgData[headerLength + 9]) = cell_voltages_length;}
     uint16_t* cell_voltages() const { return reinterpret_cast<uint16_t*>(msgData+headerLength+10); }
     void set_cell_voltages_at(const uint16_t i, const uint16_t data) { reinterpret_cast<uint16_t&>(msgData[headerLength + 10 + i]) = data; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  battery_voltage: %d\n"
+                "  battery_current: %d\n"
+                "  battery_temperature: %d\n"
+                "  cpu_temperature: %d\n"
+                "  flags: %d\n"
+                , battery_voltage()
+                , battery_current()
+                , battery_temperature()
+                , cpu_temperature()
+                , flags()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_events : public ping_message
@@ -373,6 +557,21 @@ public:
     void set_current(const uint16_t current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = current); }
     uint16_t temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
     void set_temperature(const uint16_t temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = temperature); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  voltage: %d\n"
+                "  current: %d\n"
+                "  temperature: %d\n"
+                , voltage()
+                , current()
+                , temperature()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_reboot : public ping_message
@@ -392,6 +591,17 @@ public:
 
     uint8_t goto_bootloader() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
     void set_goto_bootloader(const uint8_t goto_bootloader) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = goto_bootloader); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  goto_bootloader: %d\n"
+                , goto_bootloader()
+            );
+        }
+        return written;
+    }
 };
 
 class bluebps_erase_flash : public ping_message

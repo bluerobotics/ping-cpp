@@ -37,6 +37,17 @@ public:
 
     uint16_t acked_id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_acked_id(const uint16_t acked_id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = acked_id); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  acked_id: %d\n"
+                , acked_id()
+            );
+        }
+        return written;
+    }
 };
 
 class common_nack : public ping_message
@@ -58,6 +69,19 @@ public:
     void set_nacked_id(const uint16_t nacked_id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = nacked_id); }
     char* nack_message() const { return reinterpret_cast<char*>(msgData+headerLength+2); }
     void set_nack_message_at(const uint16_t i, const char data) { reinterpret_cast<char&>(msgData[headerLength + 2 + i]) = data; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  nacked_id: %d\n"
+                "  nack_message: %s\n"
+                , nacked_id()
+                , nack_message()
+            );
+        }
+        return written;
+    }
 };
 
 class common_ascii_text : public ping_message
@@ -77,6 +101,17 @@ public:
 
     char* ascii_message() const { return reinterpret_cast<char*>(msgData+headerLength+0); }
     void set_ascii_message_at(const uint16_t i, const char data) { reinterpret_cast<char&>(msgData[headerLength + 0 + i]) = data; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  ascii_message: %s\n"
+                , ascii_message()
+            );
+        }
+        return written;
+    }
 };
 
 class common_general_request : public ping_message
@@ -96,6 +131,17 @@ public:
 
     uint16_t requested_id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
     void set_requested_id(const uint16_t requested_id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = requested_id); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  requested_id: %d\n"
+                , requested_id()
+            );
+        }
+        return written;
+    }
 };
 
 class common_device_information : public ping_message
@@ -125,6 +171,27 @@ public:
     void set_firmware_version_patch(const uint8_t firmware_version_patch) { reinterpret_cast<uint8_t&>(msgData[headerLength + 4] = firmware_version_patch); }
     uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 5]); }
     void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 5] = reserved); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  device_type: %d\n"
+                "  device_revision: %d\n"
+                "  firmware_version_major: %d\n"
+                "  firmware_version_minor: %d\n"
+                "  firmware_version_patch: %d\n"
+                "  reserved: %d\n"
+                , device_type()
+                , device_revision()
+                , firmware_version_major()
+                , firmware_version_minor()
+                , firmware_version_patch()
+                , reserved()
+            );
+        }
+        return written;
+    }
 };
 
 class common_protocol_version : public ping_message
@@ -150,5 +217,22 @@ public:
     void set_version_patch(const uint8_t version_patch) { reinterpret_cast<uint8_t&>(msgData[headerLength + 2] = version_patch); }
     uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 3]); }
     void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 3] = reserved); }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  version_major: %d\n"
+                "  version_minor: %d\n"
+                "  version_patch: %d\n"
+                "  reserved: %d\n"
+                , version_major()
+                , version_minor()
+                , version_patch()
+                , reserved()
+            );
+        }
+        return written;
+    }
 };
 
