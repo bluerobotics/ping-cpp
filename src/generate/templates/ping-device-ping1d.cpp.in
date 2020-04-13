@@ -7,8 +7,8 @@ Ping1d::~Ping1d()
 {% for msg in messages["get"]|sort %}
 {% for field in messages["get"][msg].payload %}
 {% if generator.is_vector(field.type) %}
-    if ({{field.name}}) {
-        delete[] {{field.name}};
+    if ({{msg}}_data.{{field.name}}) {
+        delete[] {{msg}}_data.{{field.name}};
     }
 {% endif %}
 {% endfor %}
@@ -39,23 +39,23 @@ void Ping1d::_handleMessage(const ping_message* message)
             const ping1d_{{msg}}* message_{{msg}} = static_cast<const ping1d_{{msg}}*>(message);
 {% for field in messages["get"][msg].payload %}
 {% if generator.is_vector(field.type) %}
-            if (message_{{msg}}->{{field.name}}_length() > {{field.name}}_length) {
-                if ({{field.name}}) {
-                    delete[] {{field.name}};
+            if (message_{{msg}}->{{field.name}}_length() > {{msg}}_data.{{field.name}}_length) {
+                if ({{msg}}_data.{{field.name}}) {
+                    delete[] {{msg}}_data.{{field.name}};
                 }
-                {{field.name}} = new {{generator.get_type_string(field.vector.datatype)}}[message_{{msg}}->{{field.name}}_length()];
+                {{msg}}_data.{{field.name}} = new {{generator.get_type_string(field.vector.datatype)}}[message_{{msg}}->{{field.name}}_length()];
             }
 
             // If pointer is invalid, make sure to abort, there is no more memory!
-            if (profile_data == nullptr) {
-                {{field.name}}_length = -1;
+            if (profile_data.profile_data == nullptr) {
+                {{msg}}_data.{{field.name}}_length = -1;
                 return;
             }
 
-            {{field.name}}_length = message_{{msg}}->{{field.name}}_length();
-            memcpy({{field.name}}, message_{{msg}}->{{field.name}}(), message_{{msg}}->{{field.name}}_length());
+            {{msg}}_data.{{field.name}}_length = message_{{msg}}->{{field.name}}_length();
+            memcpy({{msg}}_data.{{field.name}}, message_{{msg}}->{{field.name}}(), message_{{msg}}->{{field.name}}_length());
 {% else %}
-            {{field.name}} = message_{{msg}}->{{field.name}}();
+            {{msg}}_data.{{field.name}} = message_{{msg}}->{{field.name}}();
 {% endif %}
 {% endfor %}
         }
@@ -85,11 +85,14 @@ bool Ping1d::{{msg}}({% for field in messages["set"][msg].payload %}{{generator.
     // Read back the data and check that changes have been applied
     if (verify
 {% if messages["set"][msg].payload %}
+{% if msg != "set_device_id" %}
+        && ({% for field in messages["set"][msg].payload %}{{msg|replace("set_", "")}}_data.{{field.name}} != _{{field.name}}{{ "\n        || " if not loop.last }}{% endfor %})) {
+{% else %}
         && ({% for field in messages["set"][msg].payload %}{{field.name}} != _{{field.name}}{{ "\n        || " if not loop.last }}{% endfor %})) {
+{% endif %}
 {% endif %}
         return false;
     }
     return true;
 }
-
 {% endfor %}

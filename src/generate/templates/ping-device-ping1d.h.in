@@ -51,29 +51,23 @@ public:
     bool {{msg}}({% for field in messages["set"][msg].payload %}{{generator.get_type_string(field.type)}} {{field.name}}, {% endfor %}bool verify = true);
 
 {% endfor %}
-{% set propnames=[] %}
-{% set proplist=[] %}
-{% for msg in messages["get"] %}
-{% if not messages["get"][msg].deprecated %}
-{% for field in messages["get"][msg].payload %}
-{% if field.name not in propnames%}
-{{ '' if propnames.append(field.name) -}}
-{{ '' if proplist.append(field) -}}
-{% endif %}
-{% endfor %}
-{% endif %}
-{% endfor %}
-{% for field in proplist %}
-    // {{field.description}}
-{% if generator.is_vector(field.type) %}
-{% if field.vector.sizetype %}
-    {{generator.get_type_string(field.vector.sizetype)}} {{field.name}}_length = 0;
-{% endif %}
-    {{generator.get_type_string(field.vector.datatype)}}* {{field.name}} = 0;
-{% else %}
-    {{generator.get_type_string(field.type)}} {{field.name}} = 0;
-{% endif %}
 
+{% for msg in messages["get"]|sort %}
+{% if not messages["get"][msg].deprecated %}
+    //! {{messages["get"][msg].description}}
+    struct {
+{% for field in messages["get"][msg].payload %}
+        // {{field.description}}
+{% if not generator.is_vector(field.type) %}
+        {{generator.get_type_string(field.type)}} {{field.name}};
+{% else %}
+        {{generator.get_type_string(field.vector.datatype)}}* {{field.name}} = nullptr;
+        {{generator.get_type_string(field.vector.sizetype)}} {{field.name}}_length = 0;
+{% endif %}
+{% endfor %}
+    } {{msg}}_data;
+
+{% endif %}
 {% endfor %}
 
 private:
