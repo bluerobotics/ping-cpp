@@ -49,14 +49,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1000; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1000; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t device_id() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_device_id(const uint8_t device_id) { (uint8_t&)msgData[headerLength + 0] = device_id; }
+    uint8_t device_id() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_device_id(const uint8_t device_id) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = device_id); }
 };
 
 class ping1d_set_range : public ping_message
@@ -68,16 +68,16 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(8); // payload size
-        (uint16_t&)msgData[4] = 1001; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(8); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1001; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t scan_start() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_scan_start(const uint32_t scan_start) { (uint32_t&)msgData[headerLength + 0] = scan_start; }
-    uint32_t scan_length() const { return (uint32_t&)msgData[headerLength + 4]; }
-    void set_scan_length(const uint32_t scan_length) { (uint32_t&)msgData[headerLength + 4] = scan_length; }
+    uint32_t scan_start() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_scan_start(const uint32_t scan_start) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = scan_start); }
+    uint32_t scan_length() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 4]); }
+    void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 4] = scan_length); }
 };
 
 class ping1d_set_speed_of_sound : public ping_message
@@ -89,14 +89,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(4); // payload size
-        (uint16_t&)msgData[4] = 1002; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(4); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1002; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t speed_of_sound() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_speed_of_sound(const uint32_t speed_of_sound) { (uint32_t&)msgData[headerLength + 0] = speed_of_sound; }
+    uint32_t speed_of_sound() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_speed_of_sound(const uint32_t speed_of_sound) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = speed_of_sound); }
 };
 
 class ping1d_set_mode_auto : public ping_message
@@ -108,14 +108,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1003; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1003; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t mode_auto() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_mode_auto(const uint8_t mode_auto) { (uint8_t&)msgData[headerLength + 0] = mode_auto; }
+    uint8_t mode_auto() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_mode_auto(const uint8_t mode_auto) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = mode_auto); }
 };
 
 class ping1d_set_ping_interval : public ping_message
@@ -127,14 +127,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1004; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1004; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t ping_interval() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_ping_interval(const uint16_t ping_interval) { (uint16_t&)msgData[headerLength + 0] = ping_interval; }
+    uint16_t ping_interval() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_ping_interval(const uint16_t ping_interval) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = ping_interval); }
 };
 
 class ping1d_set_gain_setting : public ping_message
@@ -146,14 +146,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1005; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1005; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t gain_setting() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_gain_setting(const uint8_t gain_setting) { (uint8_t&)msgData[headerLength + 0] = gain_setting; }
+    uint8_t gain_setting() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_gain_setting(const uint8_t gain_setting) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = gain_setting); }
 };
 
 class ping1d_set_ping_enable : public ping_message
@@ -165,14 +165,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1006; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1006; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t ping_enabled() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_ping_enabled(const uint8_t ping_enabled) { (uint8_t&)msgData[headerLength + 0] = ping_enabled; }
+    uint8_t ping_enabled() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_ping_enabled(const uint8_t ping_enabled) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = ping_enabled); }
 };
 
 class ping1d_firmware_version : public ping_message
@@ -184,20 +184,20 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(6); // payload size
-        (uint16_t&)msgData[4] = 1200; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(6); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1200; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t device_type() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_device_type(const uint8_t device_type) { (uint8_t&)msgData[headerLength + 0] = device_type; }
-    uint8_t device_model() const { return (uint8_t&)msgData[headerLength + 1]; }
-    void set_device_model(const uint8_t device_model) { (uint8_t&)msgData[headerLength + 1] = device_model; }
-    uint16_t firmware_version_major() const { return (uint16_t&)msgData[headerLength + 2]; }
-    void set_firmware_version_major(const uint16_t firmware_version_major) { (uint16_t&)msgData[headerLength + 2] = firmware_version_major; }
-    uint16_t firmware_version_minor() const { return (uint16_t&)msgData[headerLength + 4]; }
-    void set_firmware_version_minor(const uint16_t firmware_version_minor) { (uint16_t&)msgData[headerLength + 4] = firmware_version_minor; }
+    uint8_t device_type() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_device_type(const uint8_t device_type) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = device_type); }
+    uint8_t device_model() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 1]); }
+    void set_device_model(const uint8_t device_model) { reinterpret_cast<uint8_t&>(msgData[headerLength + 1] = device_model); }
+    uint16_t firmware_version_major() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 2]); }
+    void set_firmware_version_major(const uint16_t firmware_version_major) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = firmware_version_major); }
+    uint16_t firmware_version_minor() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
+    void set_firmware_version_minor(const uint16_t firmware_version_minor) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = firmware_version_minor); }
 };
 
 class ping1d_device_id : public ping_message
@@ -209,14 +209,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1201; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1201; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t device_id() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_device_id(const uint8_t device_id) { (uint8_t&)msgData[headerLength + 0] = device_id; }
+    uint8_t device_id() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_device_id(const uint8_t device_id) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = device_id); }
 };
 
 class ping1d_voltage_5 : public ping_message
@@ -228,14 +228,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1202; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1202; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t voltage_5() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_voltage_5(const uint16_t voltage_5) { (uint16_t&)msgData[headerLength + 0] = voltage_5; }
+    uint16_t voltage_5() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_voltage_5(const uint16_t voltage_5) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = voltage_5); }
 };
 
 class ping1d_speed_of_sound : public ping_message
@@ -247,14 +247,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(4); // payload size
-        (uint16_t&)msgData[4] = 1203; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(4); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1203; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t speed_of_sound() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_speed_of_sound(const uint32_t speed_of_sound) { (uint32_t&)msgData[headerLength + 0] = speed_of_sound; }
+    uint32_t speed_of_sound() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_speed_of_sound(const uint32_t speed_of_sound) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = speed_of_sound); }
 };
 
 class ping1d_range : public ping_message
@@ -266,16 +266,16 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(8); // payload size
-        (uint16_t&)msgData[4] = 1204; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(8); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1204; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t scan_start() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_scan_start(const uint32_t scan_start) { (uint32_t&)msgData[headerLength + 0] = scan_start; }
-    uint32_t scan_length() const { return (uint32_t&)msgData[headerLength + 4]; }
-    void set_scan_length(const uint32_t scan_length) { (uint32_t&)msgData[headerLength + 4] = scan_length; }
+    uint32_t scan_start() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_scan_start(const uint32_t scan_start) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = scan_start); }
+    uint32_t scan_length() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 4]); }
+    void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 4] = scan_length); }
 };
 
 class ping1d_mode_auto : public ping_message
@@ -287,14 +287,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1205; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1205; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t mode_auto() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_mode_auto(const uint8_t mode_auto) { (uint8_t&)msgData[headerLength + 0] = mode_auto; }
+    uint8_t mode_auto() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_mode_auto(const uint8_t mode_auto) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = mode_auto); }
 };
 
 class ping1d_ping_interval : public ping_message
@@ -306,14 +306,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1206; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1206; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t ping_interval() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_ping_interval(const uint16_t ping_interval) { (uint16_t&)msgData[headerLength + 0] = ping_interval; }
+    uint16_t ping_interval() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_ping_interval(const uint16_t ping_interval) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = ping_interval); }
 };
 
 class ping1d_gain_setting : public ping_message
@@ -325,14 +325,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(4); // payload size
-        (uint16_t&)msgData[4] = 1207; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(4); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1207; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t gain_setting() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_gain_setting(const uint32_t gain_setting) { (uint32_t&)msgData[headerLength + 0] = gain_setting; }
+    uint32_t gain_setting() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_gain_setting(const uint32_t gain_setting) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = gain_setting); }
 };
 
 class ping1d_transmit_duration : public ping_message
@@ -344,14 +344,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1208; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1208; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t transmit_duration() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_transmit_duration(const uint16_t transmit_duration) { (uint16_t&)msgData[headerLength + 0] = transmit_duration; }
+    uint16_t transmit_duration() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_transmit_duration(const uint16_t transmit_duration) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = transmit_duration); }
 };
 
 class ping1d_general_info : public ping_message
@@ -363,24 +363,24 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(10); // payload size
-        (uint16_t&)msgData[4] = 1210; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(10); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1210; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t firmware_version_major() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_firmware_version_major(const uint16_t firmware_version_major) { (uint16_t&)msgData[headerLength + 0] = firmware_version_major; }
-    uint16_t firmware_version_minor() const { return (uint16_t&)msgData[headerLength + 2]; }
-    void set_firmware_version_minor(const uint16_t firmware_version_minor) { (uint16_t&)msgData[headerLength + 2] = firmware_version_minor; }
-    uint16_t voltage_5() const { return (uint16_t&)msgData[headerLength + 4]; }
-    void set_voltage_5(const uint16_t voltage_5) { (uint16_t&)msgData[headerLength + 4] = voltage_5; }
-    uint16_t ping_interval() const { return (uint16_t&)msgData[headerLength + 6]; }
-    void set_ping_interval(const uint16_t ping_interval) { (uint16_t&)msgData[headerLength + 6] = ping_interval; }
-    uint8_t gain_setting() const { return (uint8_t&)msgData[headerLength + 8]; }
-    void set_gain_setting(const uint8_t gain_setting) { (uint8_t&)msgData[headerLength + 8] = gain_setting; }
-    uint8_t mode_auto() const { return (uint8_t&)msgData[headerLength + 9]; }
-    void set_mode_auto(const uint8_t mode_auto) { (uint8_t&)msgData[headerLength + 9] = mode_auto; }
+    uint16_t firmware_version_major() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_firmware_version_major(const uint16_t firmware_version_major) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = firmware_version_major); }
+    uint16_t firmware_version_minor() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 2]); }
+    void set_firmware_version_minor(const uint16_t firmware_version_minor) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = firmware_version_minor); }
+    uint16_t voltage_5() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
+    void set_voltage_5(const uint16_t voltage_5) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = voltage_5); }
+    uint16_t ping_interval() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 6]); }
+    void set_ping_interval(const uint16_t ping_interval) { reinterpret_cast<uint16_t&>(msgData[headerLength + 6] = ping_interval); }
+    uint8_t gain_setting() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 8]); }
+    void set_gain_setting(const uint8_t gain_setting) { reinterpret_cast<uint8_t&>(msgData[headerLength + 8] = gain_setting); }
+    uint8_t mode_auto() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 9]); }
+    void set_mode_auto(const uint8_t mode_auto) { reinterpret_cast<uint8_t&>(msgData[headerLength + 9] = mode_auto); }
 };
 
 class ping1d_distance_simple : public ping_message
@@ -392,16 +392,16 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(5); // payload size
-        (uint16_t&)msgData[4] = 1211; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(5); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1211; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t distance() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_distance(const uint32_t distance) { (uint32_t&)msgData[headerLength + 0] = distance; }
-    uint8_t confidence() const { return (uint8_t&)msgData[headerLength + 4]; }
-    void set_confidence(const uint8_t confidence) { (uint8_t&)msgData[headerLength + 4] = confidence; }
+    uint32_t distance() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_distance(const uint32_t distance) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = distance); }
+    uint8_t confidence() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 4]); }
+    void set_confidence(const uint8_t confidence) { reinterpret_cast<uint8_t&>(msgData[headerLength + 4] = confidence); }
 };
 
 class ping1d_distance : public ping_message
@@ -413,26 +413,26 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(24); // payload size
-        (uint16_t&)msgData[4] = 1212; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(24); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1212; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t distance() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_distance(const uint32_t distance) { (uint32_t&)msgData[headerLength + 0] = distance; }
-    uint16_t confidence() const { return (uint16_t&)msgData[headerLength + 4]; }
-    void set_confidence(const uint16_t confidence) { (uint16_t&)msgData[headerLength + 4] = confidence; }
-    uint16_t transmit_duration() const { return (uint16_t&)msgData[headerLength + 6]; }
-    void set_transmit_duration(const uint16_t transmit_duration) { (uint16_t&)msgData[headerLength + 6] = transmit_duration; }
-    uint32_t ping_number() const { return (uint32_t&)msgData[headerLength + 8]; }
-    void set_ping_number(const uint32_t ping_number) { (uint32_t&)msgData[headerLength + 8] = ping_number; }
-    uint32_t scan_start() const { return (uint32_t&)msgData[headerLength + 12]; }
-    void set_scan_start(const uint32_t scan_start) { (uint32_t&)msgData[headerLength + 12] = scan_start; }
-    uint32_t scan_length() const { return (uint32_t&)msgData[headerLength + 16]; }
-    void set_scan_length(const uint32_t scan_length) { (uint32_t&)msgData[headerLength + 16] = scan_length; }
-    uint32_t gain_setting() const { return (uint32_t&)msgData[headerLength + 20]; }
-    void set_gain_setting(const uint32_t gain_setting) { (uint32_t&)msgData[headerLength + 20] = gain_setting; }
+    uint32_t distance() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_distance(const uint32_t distance) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = distance); }
+    uint16_t confidence() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
+    void set_confidence(const uint16_t confidence) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = confidence); }
+    uint16_t transmit_duration() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 6]); }
+    void set_transmit_duration(const uint16_t transmit_duration) { reinterpret_cast<uint16_t&>(msgData[headerLength + 6] = transmit_duration); }
+    uint32_t ping_number() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 8]); }
+    void set_ping_number(const uint32_t ping_number) { reinterpret_cast<uint32_t&>(msgData[headerLength + 8] = ping_number); }
+    uint32_t scan_start() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 12]); }
+    void set_scan_start(const uint32_t scan_start) { reinterpret_cast<uint32_t&>(msgData[headerLength + 12] = scan_start); }
+    uint32_t scan_length() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 16]); }
+    void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 16] = scan_length); }
+    uint32_t gain_setting() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 20]); }
+    void set_gain_setting(const uint32_t gain_setting) { reinterpret_cast<uint32_t&>(msgData[headerLength + 20] = gain_setting); }
 };
 
 class ping1d_processor_temperature : public ping_message
@@ -444,14 +444,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1213; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1213; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t processor_temperature() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_processor_temperature(const uint16_t processor_temperature) { (uint16_t&)msgData[headerLength + 0] = processor_temperature; }
+    uint16_t processor_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_processor_temperature(const uint16_t processor_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = processor_temperature); }
 };
 
 class ping1d_pcb_temperature : public ping_message
@@ -463,14 +463,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1214; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1214; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t pcb_temperature() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_pcb_temperature(const uint16_t pcb_temperature) { (uint16_t&)msgData[headerLength + 0] = pcb_temperature; }
+    uint16_t pcb_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_pcb_temperature(const uint16_t pcb_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = pcb_temperature); }
 };
 
 class ping1d_ping_enable : public ping_message
@@ -482,14 +482,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 1215; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1215; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t ping_enabled() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_ping_enabled(const uint8_t ping_enabled) { (uint8_t&)msgData[headerLength + 0] = ping_enabled; }
+    uint8_t ping_enabled() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_ping_enabled(const uint8_t ping_enabled) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = ping_enabled); }
 };
 
 class ping1d_profile : public ping_message
@@ -502,31 +502,31 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(26 + profile_data_length); // payload size
-        (uint16_t&)msgData[4] = 1300; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(26 + profile_data_length); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1300; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t distance() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_distance(const uint32_t distance) { (uint32_t&)msgData[headerLength + 0] = distance; }
-    uint16_t confidence() const { return (uint16_t&)msgData[headerLength + 4]; }
-    void set_confidence(const uint16_t confidence) { (uint16_t&)msgData[headerLength + 4] = confidence; }
-    uint16_t transmit_duration() const { return (uint16_t&)msgData[headerLength + 6]; }
-    void set_transmit_duration(const uint16_t transmit_duration) { (uint16_t&)msgData[headerLength + 6] = transmit_duration; }
-    uint32_t ping_number() const { return (uint32_t&)msgData[headerLength + 8]; }
-    void set_ping_number(const uint32_t ping_number) { (uint32_t&)msgData[headerLength + 8] = ping_number; }
-    uint32_t scan_start() const { return (uint32_t&)msgData[headerLength + 12]; }
-    void set_scan_start(const uint32_t scan_start) { (uint32_t&)msgData[headerLength + 12] = scan_start; }
-    uint32_t scan_length() const { return (uint32_t&)msgData[headerLength + 16]; }
-    void set_scan_length(const uint32_t scan_length) { (uint32_t&)msgData[headerLength + 16] = scan_length; }
-    uint32_t gain_setting() const { return (uint32_t&)msgData[headerLength + 20]; }
-    void set_gain_setting(const uint32_t gain_setting) { (uint32_t&)msgData[headerLength + 20] = gain_setting; }
-    uint16_t profile_data_length() const { return (uint16_t&)msgData[headerLength + 24]; }
+    uint32_t distance() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_distance(const uint32_t distance) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = distance); }
+    uint16_t confidence() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
+    void set_confidence(const uint16_t confidence) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = confidence); }
+    uint16_t transmit_duration() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 6]); }
+    void set_transmit_duration(const uint16_t transmit_duration) { reinterpret_cast<uint16_t&>(msgData[headerLength + 6] = transmit_duration); }
+    uint32_t ping_number() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 8]); }
+    void set_ping_number(const uint32_t ping_number) { reinterpret_cast<uint32_t&>(msgData[headerLength + 8] = ping_number); }
+    uint32_t scan_start() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 12]); }
+    void set_scan_start(const uint32_t scan_start) { reinterpret_cast<uint32_t&>(msgData[headerLength + 12] = scan_start); }
+    uint32_t scan_length() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 16]); }
+    void set_scan_length(const uint32_t scan_length) { reinterpret_cast<uint32_t&>(msgData[headerLength + 16] = scan_length); }
+    uint32_t gain_setting() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 20]); }
+    void set_gain_setting(const uint32_t gain_setting) { reinterpret_cast<uint32_t&>(msgData[headerLength + 20] = gain_setting); }
+    uint16_t profile_data_length() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 24]); }
     //TODO do this in constructor (const)
-    void set_profile_data_length(const uint16_t profile_data_length) { (uint16_t&)msgData[headerLength + 24] = profile_data_length;}
-    uint8_t* profile_data() const { return (uint8_t*)(msgData+headerLength+26); }
-    void set_profile_data_at(const uint16_t i, const uint8_t data) { (uint8_t&)msgData[headerLength + 26 + i] = data; }
+    void set_profile_data_length(const uint16_t profile_data_length) { reinterpret_cast<uint16_t&>(msgData[headerLength + 24]) = profile_data_length;}
+    uint8_t* profile_data() const { return reinterpret_cast<uint8_t*>(msgData+headerLength+26); }
+    void set_profile_data_at(const uint16_t i, const uint8_t data) { reinterpret_cast<uint8_t&>(msgData[headerLength + 26 + i]) = data; }
 };
 
 class ping1d_goto_bootloader : public ping_message
@@ -538,8 +538,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(0); // payload size
-        (uint16_t&)msgData[4] = 1100; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(0); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1100; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
@@ -555,14 +555,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1400; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1400; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t id() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_id(const uint16_t id) { (uint16_t&)msgData[headerLength + 0] = id; }
+    uint16_t id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_id(const uint16_t id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = id); }
 };
 
 class ping1d_continuous_stop : public ping_message
@@ -574,13 +574,13 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1401; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1401; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t id() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_id(const uint16_t id) { (uint16_t&)msgData[headerLength + 0] = id; }
+    uint16_t id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_id(const uint16_t id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = id); }
 };
 

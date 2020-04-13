@@ -43,14 +43,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9000; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9000; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t limit() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_limit(const uint16_t limit) { (uint16_t&)msgData[headerLength + 0] = limit; }
+    uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
 };
 
 class bluebps_set_cell_voltage_timeout : public ping_message
@@ -62,14 +62,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9001; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9001; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t timeout() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_timeout(const uint16_t timeout) { (uint16_t&)msgData[headerLength + 0] = timeout; }
+    uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
 };
 
 class bluebps_set_current_max : public ping_message
@@ -81,14 +81,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9002; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9002; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t limit() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_limit(const uint16_t limit) { (uint16_t&)msgData[headerLength + 0] = limit; }
+    uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
 };
 
 class bluebps_set_current_timeout : public ping_message
@@ -100,14 +100,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9003; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9003; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t timeout() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_timeout(const uint16_t timeout) { (uint16_t&)msgData[headerLength + 0] = timeout; }
+    uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
 };
 
 class bluebps_set_temperature_max : public ping_message
@@ -119,14 +119,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9004; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9004; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t limit() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_limit(const uint16_t limit) { (uint16_t&)msgData[headerLength + 0] = limit; }
+    uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
 };
 
 class bluebps_set_temperature_timeout : public ping_message
@@ -138,14 +138,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9005; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9005; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t timeout() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_timeout(const uint16_t timeout) { (uint16_t&)msgData[headerLength + 0] = timeout; }
+    uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
 };
 
 class bluebps_set_stream_rate : public ping_message
@@ -157,14 +157,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(4); // payload size
-        (uint16_t&)msgData[4] = 9006; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(4); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9006; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t rate() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_rate(const uint32_t rate) { (uint32_t&)msgData[headerLength + 0] = rate; }
+    uint32_t rate() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_rate(const uint32_t rate) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = rate); }
 };
 
 class bluebps_set_lpf_sample_frequency : public ping_message
@@ -176,14 +176,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(4); // payload size
-        (uint16_t&)msgData[4] = 9007; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(4); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9007; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint32_t sample_frequency() const { return (uint32_t&)msgData[headerLength + 0]; }
-    void set_sample_frequency(const uint32_t sample_frequency) { (uint32_t&)msgData[headerLength + 0] = sample_frequency; }
+    uint32_t sample_frequency() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
+    void set_sample_frequency(const uint32_t sample_frequency) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = sample_frequency); }
 };
 
 class bluebps_set_lpf_setting : public ping_message
@@ -195,14 +195,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9008; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9008; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t setting() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_setting(const uint16_t setting) { (uint16_t&)msgData[headerLength + 0] = setting; }
+    uint16_t setting() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_setting(const uint16_t setting) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = setting); }
 };
 
 class bluebps_cell_voltage_min : public ping_message
@@ -214,14 +214,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9100; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9100; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t limit() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_limit(const uint16_t limit) { (uint16_t&)msgData[headerLength + 0] = limit; }
+    uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
 };
 
 class bluebps_cell_timeout : public ping_message
@@ -233,14 +233,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9101; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9101; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t timeout() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_timeout(const uint16_t timeout) { (uint16_t&)msgData[headerLength + 0] = timeout; }
+    uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
 };
 
 class bluebps_current_max : public ping_message
@@ -252,14 +252,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9102; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9102; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t limit() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_limit(const uint16_t limit) { (uint16_t&)msgData[headerLength + 0] = limit; }
+    uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
 };
 
 class bluebps_current_timeout : public ping_message
@@ -271,14 +271,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9103; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9103; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t timeout() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_timeout(const uint16_t timeout) { (uint16_t&)msgData[headerLength + 0] = timeout; }
+    uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
 };
 
 class bluebps_temperature_max : public ping_message
@@ -290,14 +290,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9104; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9104; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t limit() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_limit(const uint16_t limit) { (uint16_t&)msgData[headerLength + 0] = limit; }
+    uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
 };
 
 class bluebps_temperature_timeout : public ping_message
@@ -309,14 +309,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 9105; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9105; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t timeout() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_timeout(const uint16_t timeout) { (uint16_t&)msgData[headerLength + 0] = timeout; }
+    uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
 };
 
 class bluebps_state : public ping_message
@@ -329,27 +329,27 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(10 + cell_voltages_length); // payload size
-        (uint16_t&)msgData[4] = 9106; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(10 + cell_voltages_length); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9106; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t battery_voltage() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_battery_voltage(const uint16_t battery_voltage) { (uint16_t&)msgData[headerLength + 0] = battery_voltage; }
-    uint16_t battery_current() const { return (uint16_t&)msgData[headerLength + 2]; }
-    void set_battery_current(const uint16_t battery_current) { (uint16_t&)msgData[headerLength + 2] = battery_current; }
-    uint16_t battery_temperature() const { return (uint16_t&)msgData[headerLength + 4]; }
-    void set_battery_temperature(const uint16_t battery_temperature) { (uint16_t&)msgData[headerLength + 4] = battery_temperature; }
-    uint16_t cpu_temperature() const { return (uint16_t&)msgData[headerLength + 6]; }
-    void set_cpu_temperature(const uint16_t cpu_temperature) { (uint16_t&)msgData[headerLength + 6] = cpu_temperature; }
-    uint8_t flags() const { return (uint8_t&)msgData[headerLength + 8]; }
-    void set_flags(const uint8_t flags) { (uint8_t&)msgData[headerLength + 8] = flags; }
-    uint8_t cell_voltages_length() const { return (uint8_t&)msgData[headerLength + 9]; }
+    uint16_t battery_voltage() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_battery_voltage(const uint16_t battery_voltage) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = battery_voltage); }
+    uint16_t battery_current() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 2]); }
+    void set_battery_current(const uint16_t battery_current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = battery_current); }
+    uint16_t battery_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
+    void set_battery_temperature(const uint16_t battery_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = battery_temperature); }
+    uint16_t cpu_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 6]); }
+    void set_cpu_temperature(const uint16_t cpu_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 6] = cpu_temperature); }
+    uint8_t flags() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 8]); }
+    void set_flags(const uint8_t flags) { reinterpret_cast<uint8_t&>(msgData[headerLength + 8] = flags); }
+    uint8_t cell_voltages_length() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 9]); }
     //TODO do this in constructor (const)
-    void set_cell_voltages_length(const uint8_t cell_voltages_length) { (uint8_t&)msgData[headerLength + 9] = cell_voltages_length;}
-    uint16_t* cell_voltages() const { return (uint16_t*)(msgData+headerLength+10); }
-    void set_cell_voltages_at(const uint16_t i, const uint16_t data) { (uint16_t&)msgData[headerLength + 10 + i] = data; }
+    void set_cell_voltages_length(const uint8_t cell_voltages_length) { reinterpret_cast<uint8_t&>(msgData[headerLength + 9]) = cell_voltages_length;}
+    uint16_t* cell_voltages() const { return reinterpret_cast<uint16_t*>(msgData+headerLength+10); }
+    void set_cell_voltages_at(const uint16_t i, const uint16_t data) { reinterpret_cast<uint16_t&>(msgData[headerLength + 10 + i]) = data; }
 };
 
 class bluebps_events : public ping_message
@@ -361,18 +361,18 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(6); // payload size
-        (uint16_t&)msgData[4] = 9107; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(6); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9107; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t voltage() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_voltage(const uint16_t voltage) { (uint16_t&)msgData[headerLength + 0] = voltage; }
-    uint16_t current() const { return (uint16_t&)msgData[headerLength + 2]; }
-    void set_current(const uint16_t current) { (uint16_t&)msgData[headerLength + 2] = current; }
-    uint16_t temperature() const { return (uint16_t&)msgData[headerLength + 4]; }
-    void set_temperature(const uint16_t temperature) { (uint16_t&)msgData[headerLength + 4] = temperature; }
+    uint16_t voltage() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_voltage(const uint16_t voltage) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = voltage); }
+    uint16_t current() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 2]); }
+    void set_current(const uint16_t current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = current); }
+    uint16_t temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
+    void set_temperature(const uint16_t temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = temperature); }
 };
 
 class bluebps_reboot : public ping_message
@@ -384,14 +384,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(1); // payload size
-        (uint16_t&)msgData[4] = 9200; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9200; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t goto_bootloader() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_goto_bootloader(const uint8_t goto_bootloader) { (uint8_t&)msgData[headerLength + 0] = goto_bootloader; }
+    uint8_t goto_bootloader() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_goto_bootloader(const uint8_t goto_bootloader) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = goto_bootloader); }
 };
 
 class bluebps_erase_flash : public ping_message
@@ -403,8 +403,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(0); // payload size
-        (uint16_t&)msgData[4] = 9201; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(0); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9201; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
@@ -420,8 +420,8 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(0); // payload size
-        (uint16_t&)msgData[4] = 9202; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(0); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 9202; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }

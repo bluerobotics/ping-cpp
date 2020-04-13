@@ -29,14 +29,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 1; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 1; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t acked_id() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_acked_id(const uint16_t acked_id) { (uint16_t&)msgData[headerLength + 0] = acked_id; }
+    uint16_t acked_id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_acked_id(const uint16_t acked_id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = acked_id); }
 };
 
 class common_nack : public ping_message
@@ -48,16 +48,16 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2 + nack_message_length); // payload size
-        (uint16_t&)msgData[4] = 2; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2 + nack_message_length); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 2; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t nacked_id() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_nacked_id(const uint16_t nacked_id) { (uint16_t&)msgData[headerLength + 0] = nacked_id; }
-    char* nack_message() const { return (char*)(msgData+headerLength+2); }
-    void set_nack_message_at(const uint16_t i, const char data) { (char&)msgData[headerLength + 2 + i] = data; }
+    uint16_t nacked_id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_nacked_id(const uint16_t nacked_id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = nacked_id); }
+    char* nack_message() const { return reinterpret_cast<char*>(msgData+headerLength+2); }
+    void set_nack_message_at(const uint16_t i, const char data) { reinterpret_cast<char&>(msgData[headerLength + 2 + i]) = data; }
 };
 
 class common_ascii_text : public ping_message
@@ -69,14 +69,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(0 + ascii_message_length); // payload size
-        (uint16_t&)msgData[4] = 3; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(0 + ascii_message_length); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 3; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    char* ascii_message() const { return (char*)(msgData+headerLength+0); }
-    void set_ascii_message_at(const uint16_t i, const char data) { (char&)msgData[headerLength + 0 + i] = data; }
+    char* ascii_message() const { return reinterpret_cast<char*>(msgData+headerLength+0); }
+    void set_ascii_message_at(const uint16_t i, const char data) { reinterpret_cast<char&>(msgData[headerLength + 0 + i]) = data; }
 };
 
 class common_general_request : public ping_message
@@ -88,14 +88,14 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(2); // payload size
-        (uint16_t&)msgData[4] = 6; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(2); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 6; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint16_t requested_id() const { return (uint16_t&)msgData[headerLength + 0]; }
-    void set_requested_id(const uint16_t requested_id) { (uint16_t&)msgData[headerLength + 0] = requested_id; }
+    uint16_t requested_id() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
+    void set_requested_id(const uint16_t requested_id) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = requested_id); }
 };
 
 class common_device_information : public ping_message
@@ -107,24 +107,24 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(6); // payload size
-        (uint16_t&)msgData[4] = 4; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(6); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 4; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t device_type() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_device_type(const uint8_t device_type) { (uint8_t&)msgData[headerLength + 0] = device_type; }
-    uint8_t device_revision() const { return (uint8_t&)msgData[headerLength + 1]; }
-    void set_device_revision(const uint8_t device_revision) { (uint8_t&)msgData[headerLength + 1] = device_revision; }
-    uint8_t firmware_version_major() const { return (uint8_t&)msgData[headerLength + 2]; }
-    void set_firmware_version_major(const uint8_t firmware_version_major) { (uint8_t&)msgData[headerLength + 2] = firmware_version_major; }
-    uint8_t firmware_version_minor() const { return (uint8_t&)msgData[headerLength + 3]; }
-    void set_firmware_version_minor(const uint8_t firmware_version_minor) { (uint8_t&)msgData[headerLength + 3] = firmware_version_minor; }
-    uint8_t firmware_version_patch() const { return (uint8_t&)msgData[headerLength + 4]; }
-    void set_firmware_version_patch(const uint8_t firmware_version_patch) { (uint8_t&)msgData[headerLength + 4] = firmware_version_patch; }
-    uint8_t reserved() const { return (uint8_t&)msgData[headerLength + 5]; }
-    void set_reserved(const uint8_t reserved) { (uint8_t&)msgData[headerLength + 5] = reserved; }
+    uint8_t device_type() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_device_type(const uint8_t device_type) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = device_type); }
+    uint8_t device_revision() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 1]); }
+    void set_device_revision(const uint8_t device_revision) { reinterpret_cast<uint8_t&>(msgData[headerLength + 1] = device_revision); }
+    uint8_t firmware_version_major() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 2]); }
+    void set_firmware_version_major(const uint8_t firmware_version_major) { reinterpret_cast<uint8_t&>(msgData[headerLength + 2] = firmware_version_major); }
+    uint8_t firmware_version_minor() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 3]); }
+    void set_firmware_version_minor(const uint8_t firmware_version_minor) { reinterpret_cast<uint8_t&>(msgData[headerLength + 3] = firmware_version_minor); }
+    uint8_t firmware_version_patch() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 4]); }
+    void set_firmware_version_patch(const uint8_t firmware_version_patch) { reinterpret_cast<uint8_t&>(msgData[headerLength + 4] = firmware_version_patch); }
+    uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 5]); }
+    void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 5] = reserved); }
 };
 
 class common_protocol_version : public ping_message
@@ -136,19 +136,19 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        (uint16_t&)msgData[2] = static_cast<uint16_t>(4); // payload size
-        (uint16_t&)msgData[4] = 5; // ID
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(4); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 5; // ID
         msgData[6] = 0;
         msgData[7] = 0;
     }
 
-    uint8_t version_major() const { return (uint8_t&)msgData[headerLength + 0]; }
-    void set_version_major(const uint8_t version_major) { (uint8_t&)msgData[headerLength + 0] = version_major; }
-    uint8_t version_minor() const { return (uint8_t&)msgData[headerLength + 1]; }
-    void set_version_minor(const uint8_t version_minor) { (uint8_t&)msgData[headerLength + 1] = version_minor; }
-    uint8_t version_patch() const { return (uint8_t&)msgData[headerLength + 2]; }
-    void set_version_patch(const uint8_t version_patch) { (uint8_t&)msgData[headerLength + 2] = version_patch; }
-    uint8_t reserved() const { return (uint8_t&)msgData[headerLength + 3]; }
-    void set_reserved(const uint8_t reserved) { (uint8_t&)msgData[headerLength + 3] = reserved; }
+    uint8_t version_major() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_version_major(const uint8_t version_major) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = version_major); }
+    uint8_t version_minor() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 1]); }
+    void set_version_minor(const uint8_t version_minor) { reinterpret_cast<uint8_t&>(msgData[headerLength + 1] = version_minor); }
+    uint8_t version_patch() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 2]); }
+    void set_version_patch(const uint8_t version_patch) { reinterpret_cast<uint8_t&>(msgData[headerLength + 2] = version_patch); }
+    uint8_t reserved() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 3]); }
+    void set_reserved(const uint8_t reserved) { reinterpret_cast<uint8_t&>(msgData[headerLength + 3] = reserved); }
 };
 
