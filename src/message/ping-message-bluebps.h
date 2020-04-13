@@ -50,7 +50,7 @@ public:
     }
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = limit; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -80,7 +80,7 @@ public:
     }
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = timeout; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -110,7 +110,7 @@ public:
     }
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = limit; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -140,7 +140,7 @@ public:
     }
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = timeout; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -170,7 +170,7 @@ public:
     }
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = limit; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -200,7 +200,7 @@ public:
     }
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = timeout; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -230,7 +230,7 @@ public:
     }
 
     uint32_t rate() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
-    void set_rate(const uint32_t rate) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = rate); }
+    void set_rate(const uint32_t rate) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0]) = rate; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -260,7 +260,7 @@ public:
     }
 
     uint32_t sample_frequency() const { return reinterpret_cast<uint32_t&>(msgData[headerLength + 0]); }
-    void set_sample_frequency(const uint32_t sample_frequency) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0] = sample_frequency); }
+    void set_sample_frequency(const uint32_t sample_frequency) { reinterpret_cast<uint32_t&>(msgData[headerLength + 0]) = sample_frequency; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -290,7 +290,7 @@ public:
     }
 
     uint16_t setting() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_setting(const uint16_t setting) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = setting); }
+    void set_setting(const uint16_t setting) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = setting; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -320,7 +320,7 @@ public:
     }
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = limit; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -350,7 +350,7 @@ public:
     }
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = timeout; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -380,7 +380,7 @@ public:
     }
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = limit; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -410,7 +410,7 @@ public:
     }
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = timeout; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -440,7 +440,7 @@ public:
     }
 
     uint16_t limit() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = limit); }
+    void set_limit(const uint16_t limit) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = limit; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -470,7 +470,7 @@ public:
     }
 
     uint16_t timeout() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = timeout); }
+    void set_timeout(const uint16_t timeout) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = timeout; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -501,15 +501,15 @@ public:
     }
 
     uint16_t battery_voltage() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_battery_voltage(const uint16_t battery_voltage) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = battery_voltage); }
+    void set_battery_voltage(const uint16_t battery_voltage) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = battery_voltage; }
     uint16_t battery_current() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 2]); }
-    void set_battery_current(const uint16_t battery_current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = battery_current); }
+    void set_battery_current(const uint16_t battery_current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2]) = battery_current; }
     uint16_t battery_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
-    void set_battery_temperature(const uint16_t battery_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = battery_temperature); }
+    void set_battery_temperature(const uint16_t battery_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4]) = battery_temperature; }
     uint16_t cpu_temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 6]); }
-    void set_cpu_temperature(const uint16_t cpu_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 6] = cpu_temperature); }
+    void set_cpu_temperature(const uint16_t cpu_temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 6]) = cpu_temperature; }
     uint8_t flags() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 8]); }
-    void set_flags(const uint8_t flags) { reinterpret_cast<uint8_t&>(msgData[headerLength + 8] = flags); }
+    void set_flags(const uint8_t flags) { reinterpret_cast<uint8_t&>(msgData[headerLength + 8]) = flags; }
     uint8_t cell_voltages_length() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 9]); }
     //TODO do this in constructor (const)
     void set_cell_voltages_length(const uint8_t cell_voltages_length) { reinterpret_cast<uint8_t&>(msgData[headerLength + 9]) = cell_voltages_length;}
@@ -552,11 +552,11 @@ public:
     }
 
     uint16_t voltage() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 0]); }
-    void set_voltage(const uint16_t voltage) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0] = voltage); }
+    void set_voltage(const uint16_t voltage) { reinterpret_cast<uint16_t&>(msgData[headerLength + 0]) = voltage; }
     uint16_t current() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 2]); }
-    void set_current(const uint16_t current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2] = current); }
+    void set_current(const uint16_t current) { reinterpret_cast<uint16_t&>(msgData[headerLength + 2]) = current; }
     uint16_t temperature() const { return reinterpret_cast<uint16_t&>(msgData[headerLength + 4]); }
-    void set_temperature(const uint16_t temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4] = temperature); }
+    void set_temperature(const uint16_t temperature) { reinterpret_cast<uint16_t&>(msgData[headerLength + 4]) = temperature; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
@@ -590,7 +590,7 @@ public:
     }
 
     uint8_t goto_bootloader() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
-    void set_goto_bootloader(const uint8_t goto_bootloader) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0] = goto_bootloader); }
+    void set_goto_bootloader(const uint8_t goto_bootloader) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0]) = goto_bootloader; }
 
     int getMessageAsString(char* string, size_t size) const {
         int written = ping_message::getMessageAsString(string, size);
