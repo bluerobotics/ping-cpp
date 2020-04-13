@@ -19,6 +19,10 @@ include_directories(${Boost_INCLUDE_DIR})
 # Include modules
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+# Add fmt
+include_directories(lib/fmt/include/)
+add_subdirectory(lib/fmt/)
+
 # test-device
 add_executable(test-device)
 target_sources(
@@ -33,6 +37,7 @@ PRIVATE
     HAL
     PING_MESSAGES
     ${Boost_LIBRARIES}
+    fmt::fmt
 )
 
 # test-device-ping1d
@@ -49,6 +54,7 @@ PRIVATE
     HAL
     PING_MESSAGES
     ${Boost_LIBRARIES}
+    fmt::fmt
 )
 
 # test-message
