@@ -76,7 +76,7 @@ public:
     void set_{{payload.name}}_at(const uint16_t i, const {{generator.get_type_string(payload.vector.datatype)}} data) { reinterpret_cast<{{generator.get_type_string(payload.vector.datatype)}}&>(msgData[headerLength + {{byte.offset}} + i]) = data; }
 {% else %}
     {{generator.get_type_string(payload.type)}} {{payload.name}}() const { return reinterpret_cast<{{generator.get_type_string(payload.type)}}&>(msgData[headerLength + {{byte.offset}}]); }
-    void set_{{payload.name}}(const {{generator.get_type_string(payload.type)}} {{payload.name}}) { reinterpret_cast<{{generator.get_type_string(payload.type)}}&>(msgData[headerLength + {{byte.offset}}] = {{payload.name}}); }
+    void set_{{payload.name}}(const {{generator.get_type_string(payload.type)}} {{payload.name}}) { reinterpret_cast<{{generator.get_type_string(payload.type)}}&>(msgData[headerLength + {{byte.offset}}]) = {{payload.name}}; }
 {% set byte.offset = byte.offset + generator.get_c_size(payload.type) %}
 {% endif %}
 {% endfor %}
