@@ -1,3 +1,6 @@
 [submodule "lib/ping-protocol"]
 	path = lib/ping-protocol
 	url = https://github.com/bluerobotics/ping-protocol
+[submodule "lib/fmt"]
+	path = lib/fmt
+	url = https://github.com/fmtlib/fmt
