@@ -106,14 +106,20 @@ public:
     void writeMessage(ping_message& message);
 
     uint8_t device_id;
-    uint8_t device_type;
-    uint8_t device_revision;
-    uint8_t firmware_version_major;
-    uint8_t firmware_version_minor;
-    uint8_t firmware_version_patch;
-    uint8_t version_major;
-    uint8_t version_minor;
-    uint8_t version_patch;
+
+    struct {
+        uint8_t device_type;
+        uint8_t device_revision;
+        uint8_t firmware_version_major;
+        uint8_t firmware_version_minor;
+        uint8_t firmware_version_patch;
+    } device_information;
+
+    struct {
+        uint8_t version_major;
+        uint8_t version_minor;
+        uint8_t version_patch;
+    } protocol_version;
 
 protected:
     /**
