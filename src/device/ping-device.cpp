@@ -75,19 +75,19 @@ void PingDevice::_handleMessage(const ping_message* message)
     case CommonId::NACK:
         break;
     case CommonId::PROTOCOL_VERSION: {
-        const common_protocol_version* protocol_version = static_cast<const common_protocol_version*>(message);
-        version_major = protocol_version->version_major();
-        version_minor = protocol_version->version_minor();
-        version_patch = protocol_version->version_patch();
+        const common_protocol_version* message_protocol_version = static_cast<const common_protocol_version*>(message);
+        protocol_version.version_major = message_protocol_version->version_major();
+        protocol_version.version_minor = message_protocol_version->version_minor();
+        protocol_version.version_patch = message_protocol_version->version_patch();
         break;
     }
     case CommonId::DEVICE_INFORMATION: {
-        const common_device_information* device_information = static_cast<const common_device_information*>(message);
-        device_type = device_information->device_type();
-        device_revision = device_information->device_revision();
-        firmware_version_major = device_information->firmware_version_major();
-        firmware_version_minor = device_information->firmware_version_minor();
-        firmware_version_patch = device_information->firmware_version_patch();
+        const common_device_information* message_device_information = static_cast<const common_device_information*>(message);
+        device_information.device_type = message_device_information->device_type();
+        device_information.device_revision = message_device_information->device_revision();
+        device_information.firmware_version_major = message_device_information->firmware_version_major();
+        device_information.firmware_version_minor = message_device_information->firmware_version_minor();
+        device_information.firmware_version_patch = message_device_information->firmware_version_patch();
         break;
     }
     default:

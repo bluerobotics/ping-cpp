@@ -114,63 +114,143 @@ public:
      */
     bool set_ping_enable(uint8_t ping_enabled, bool verify = true);
 
-    // Device type. 0: Unknown; 1: Echosounder
-    uint8_t device_type = 0;
 
-    // Device model. 0: Unknown; 1: Ping1D
-    uint8_t device_model = 0;
+    //! The distance to target with confidence estimate. Relevant device parameters during the measurement are also provided.
+    struct {
+        // The current return distance determined for the most recent acoustic measurement.
+        uint32_t distance;
+        // Confidence in the most recent range measurement.
+        uint16_t confidence;
+        // The acoustic pulse length during acoustic transmission/activation.
+        uint16_t transmit_duration;
+        // The pulse/measurement count since boot.
+        uint32_t ping_number;
+        // The beginning of the scan region in mm from the transducer.
+        uint32_t scan_start;
+        // The length of the scan region.
+        uint32_t scan_length;
+        // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
+        uint32_t gain_setting;
+    } distance_data;
 
-    // Firmware version major number.
-    uint16_t firmware_version_major = 0;
+    //! The distance to target with confidence estimate.
+    struct {
+        // Distance to the target.
+        uint32_t distance;
+        // Confidence in the distance measurement.
+        uint8_t confidence;
+    } distance_simple_data;
 
-    // Firmware version minor number.
-    uint16_t firmware_version_minor = 0;
+    //! Device information
+    struct {
+        // Device type. 0: Unknown; 1: Echosounder
+        uint8_t device_type;
+        // Device model. 0: Unknown; 1: Ping1D
+        uint8_t device_model;
+        // Firmware version major number.
+        uint16_t firmware_version_major;
+        // Firmware version minor number.
+        uint16_t firmware_version_minor;
+    } firmware_version_data;
 
-    // The 5V rail voltage.
-    uint16_t voltage_5 = 0;
+    //! The current gain setting.
+    struct {
+        // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
+        uint32_t gain_setting;
+    } gain_setting_data;
 
-    // The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
-    uint32_t speed_of_sound = 0;
+    //! General information.
+    struct {
+        // Firmware major version.
+        uint16_t firmware_version_major;
+        // Firmware minor version.
+        uint16_t firmware_version_minor;
+        // Device supply voltage.
+        uint16_t voltage_5;
+        // The interval between acoustic measurements.
+        uint16_t ping_interval;
+        // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
+        uint8_t gain_setting;
+        // The current operating mode of the device. 0: manual mode, 1: auto mode
+        uint8_t mode_auto;
+    } general_info_data;
 
-    // The beginning of the scan range in mm from the transducer.
-    uint32_t scan_start = 0;
+    //! The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.
+    struct {
+        // 0: manual mode, 1: auto mode
+        uint8_t mode_auto;
+    } mode_auto_data;
 
-    // The length of the scan range.
-    uint32_t scan_length = 0;
+    //! Temperature of the on-board thermistor.
+    struct {
+        // The temperature in centi-degrees Centigrade (100 * degrees C).
+        uint16_t pcb_temperature;
+    } pcb_temperature_data;
 
-    // 0: manual mode, 1: auto mode
-    uint8_t mode_auto = 0;
+    //! Acoustic output enabled state.
+    struct {
+        // The state of the acoustic output. 0: disabled, 1:enabled
+        uint8_t ping_enabled;
+    } ping_enable_data;
 
-    // The minimum interval between acoustic measurements. The actual interval may be longer.
-    uint16_t ping_interval = 0;
+    //! The interval between acoustic measurements.
+    struct {
+        // The minimum interval between acoustic measurements. The actual interval may be longer.
+        uint16_t ping_interval;
+    } ping_interval_data;
 
-    // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
-    uint32_t gain_setting = 0;
+    //! Temperature of the device cpu.
+    struct {
+        // The temperature in centi-degrees Centigrade (100 * degrees C).
+        uint16_t processor_temperature;
+    } processor_temperature_data;
 
-    // Acoustic pulse duration.
-    uint16_t transmit_duration = 0;
+    //! A profile produced from a single acoustic measurement. The data returned is an array of response strength at even intervals across the scan region. The scan region is defined as the region between <scan_start> and <scan_start + scan_length> millimeters away from the transducer. A distance measurement to the target is also provided.
+    struct {
+        // The current return distance determined for the most recent acoustic measurement.
+        uint32_t distance;
+        // Confidence in the most recent range measurement.
+        uint16_t confidence;
+        // The acoustic pulse length during acoustic transmission/activation.
+        uint16_t transmit_duration;
+        // The pulse/measurement count since boot.
+        uint32_t ping_number;
+        // The beginning of the scan region in mm from the transducer.
+        uint32_t scan_start;
+        // The length of the scan region.
+        uint32_t scan_length;
+        // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
+        uint32_t gain_setting;
+        // An array of return strength measurements taken at regular intervals across the scan region.
+        uint8_t* profile_data = nullptr;
+        uint16_t profile_data_length = 0;
+    } profile_data;
 
-    // Distance to the target.
-    uint32_t distance = 0;
+    //! The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).
+    struct {
+        // The beginning of the scan range in mm from the transducer.
+        uint32_t scan_start;
+        // The length of the scan range.
+        uint32_t scan_length;
+    } range_data;
 
-    // Confidence in the distance measurement.
-    uint8_t confidence = 0;
+    //! The speed of sound used for distance calculations.
+    struct {
+        // The speed of sound in the measurement medium. ~1,500,000 mm/s for water.
+        uint32_t speed_of_sound;
+    } speed_of_sound_data;
 
-    // The pulse/measurement count since boot.
-    uint32_t ping_number = 0;
+    //! The duration of the acoustic activation/transmission.
+    struct {
+        // Acoustic pulse duration.
+        uint16_t transmit_duration;
+    } transmit_duration_data;
 
-    // The temperature in centi-degrees Centigrade (100 * degrees C).
-    uint16_t processor_temperature = 0;
-
-    // The temperature in centi-degrees Centigrade (100 * degrees C).
-    uint16_t pcb_temperature = 0;
-
-    // The state of the acoustic output. 0: disabled, 1:enabled
-    uint8_t ping_enabled = 0;
-
-    // An array of return strength measurements taken at regular intervals across the scan region.
-    uint16_t profile_data_length = 0;
-    uint8_t* profile_data = 0;
+    //! The 5V rail voltage.
+    struct {
+        // The 5V rail voltage.
+        uint16_t voltage_5;
+    } voltage_5_data;
 
 
 private:

@@ -4,8 +4,8 @@
 
 Ping1d::~Ping1d()
 {
-    if (profile_data) {
-        delete[] profile_data;
+    if (profile_data.profile_data) {
+        delete[] profile_data.profile_data;
     }
 }
 
@@ -29,128 +29,128 @@ void Ping1d::_handleMessage(const ping_message* message)
         case Ping1dId::DISTANCE:
         {
             const ping1d_distance* message_distance = static_cast<const ping1d_distance*>(message);
-            distance = message_distance->distance();
-            confidence = message_distance->confidence();
-            transmit_duration = message_distance->transmit_duration();
-            ping_number = message_distance->ping_number();
-            scan_start = message_distance->scan_start();
-            scan_length = message_distance->scan_length();
-            gain_setting = message_distance->gain_setting();
+            distance_data.distance = message_distance->distance();
+            distance_data.confidence = message_distance->confidence();
+            distance_data.transmit_duration = message_distance->transmit_duration();
+            distance_data.ping_number = message_distance->ping_number();
+            distance_data.scan_start = message_distance->scan_start();
+            distance_data.scan_length = message_distance->scan_length();
+            distance_data.gain_setting = message_distance->gain_setting();
         }
         break;
         case Ping1dId::DISTANCE_SIMPLE:
         {
             const ping1d_distance_simple* message_distance_simple = static_cast<const ping1d_distance_simple*>(message);
-            distance = message_distance_simple->distance();
-            confidence = message_distance_simple->confidence();
+            distance_simple_data.distance = message_distance_simple->distance();
+            distance_simple_data.confidence = message_distance_simple->confidence();
         }
         break;
         case Ping1dId::FIRMWARE_VERSION:
         {
             const ping1d_firmware_version* message_firmware_version = static_cast<const ping1d_firmware_version*>(message);
-            device_type = message_firmware_version->device_type();
-            device_model = message_firmware_version->device_model();
-            firmware_version_major = message_firmware_version->firmware_version_major();
-            firmware_version_minor = message_firmware_version->firmware_version_minor();
+            firmware_version_data.device_type = message_firmware_version->device_type();
+            firmware_version_data.device_model = message_firmware_version->device_model();
+            firmware_version_data.firmware_version_major = message_firmware_version->firmware_version_major();
+            firmware_version_data.firmware_version_minor = message_firmware_version->firmware_version_minor();
         }
         break;
         case Ping1dId::GAIN_SETTING:
         {
             const ping1d_gain_setting* message_gain_setting = static_cast<const ping1d_gain_setting*>(message);
-            gain_setting = message_gain_setting->gain_setting();
+            gain_setting_data.gain_setting = message_gain_setting->gain_setting();
         }
         break;
         case Ping1dId::GENERAL_INFO:
         {
             const ping1d_general_info* message_general_info = static_cast<const ping1d_general_info*>(message);
-            firmware_version_major = message_general_info->firmware_version_major();
-            firmware_version_minor = message_general_info->firmware_version_minor();
-            voltage_5 = message_general_info->voltage_5();
-            ping_interval = message_general_info->ping_interval();
-            gain_setting = message_general_info->gain_setting();
-            mode_auto = message_general_info->mode_auto();
+            general_info_data.firmware_version_major = message_general_info->firmware_version_major();
+            general_info_data.firmware_version_minor = message_general_info->firmware_version_minor();
+            general_info_data.voltage_5 = message_general_info->voltage_5();
+            general_info_data.ping_interval = message_general_info->ping_interval();
+            general_info_data.gain_setting = message_general_info->gain_setting();
+            general_info_data.mode_auto = message_general_info->mode_auto();
         }
         break;
         case Ping1dId::MODE_AUTO:
         {
             const ping1d_mode_auto* message_mode_auto = static_cast<const ping1d_mode_auto*>(message);
-            mode_auto = message_mode_auto->mode_auto();
+            mode_auto_data.mode_auto = message_mode_auto->mode_auto();
         }
         break;
         case Ping1dId::PCB_TEMPERATURE:
         {
             const ping1d_pcb_temperature* message_pcb_temperature = static_cast<const ping1d_pcb_temperature*>(message);
-            pcb_temperature = message_pcb_temperature->pcb_temperature();
+            pcb_temperature_data.pcb_temperature = message_pcb_temperature->pcb_temperature();
         }
         break;
         case Ping1dId::PING_ENABLE:
         {
             const ping1d_ping_enable* message_ping_enable = static_cast<const ping1d_ping_enable*>(message);
-            ping_enabled = message_ping_enable->ping_enabled();
+            ping_enable_data.ping_enabled = message_ping_enable->ping_enabled();
         }
         break;
         case Ping1dId::PING_INTERVAL:
         {
             const ping1d_ping_interval* message_ping_interval = static_cast<const ping1d_ping_interval*>(message);
-            ping_interval = message_ping_interval->ping_interval();
+            ping_interval_data.ping_interval = message_ping_interval->ping_interval();
         }
         break;
         case Ping1dId::PROCESSOR_TEMPERATURE:
         {
             const ping1d_processor_temperature* message_processor_temperature = static_cast<const ping1d_processor_temperature*>(message);
-            processor_temperature = message_processor_temperature->processor_temperature();
+            processor_temperature_data.processor_temperature = message_processor_temperature->processor_temperature();
         }
         break;
         case Ping1dId::PROFILE:
         {
             const ping1d_profile* message_profile = static_cast<const ping1d_profile*>(message);
-            distance = message_profile->distance();
-            confidence = message_profile->confidence();
-            transmit_duration = message_profile->transmit_duration();
-            ping_number = message_profile->ping_number();
-            scan_start = message_profile->scan_start();
-            scan_length = message_profile->scan_length();
-            gain_setting = message_profile->gain_setting();
-            if (message_profile->profile_data_length() > profile_data_length) {
-                if (profile_data) {
-                    delete[] profile_data;
+            profile_data.distance = message_profile->distance();
+            profile_data.confidence = message_profile->confidence();
+            profile_data.transmit_duration = message_profile->transmit_duration();
+            profile_data.ping_number = message_profile->ping_number();
+            profile_data.scan_start = message_profile->scan_start();
+            profile_data.scan_length = message_profile->scan_length();
+            profile_data.gain_setting = message_profile->gain_setting();
+            if (message_profile->profile_data_length() > profile_data.profile_data_length) {
+                if (profile_data.profile_data) {
+                    delete[] profile_data.profile_data;
                 }
-                profile_data = new uint8_t[message_profile->profile_data_length()];
+                profile_data.profile_data = new uint8_t[message_profile->profile_data_length()];
             }
 
             // If pointer is invalid, make sure to abort, there is no more memory!
-            if (profile_data == nullptr) {
-                profile_data_length = -1;
+            if (profile_data.profile_data == nullptr) {
+                profile_data.profile_data_length = -1;
                 return;
             }
 
-            profile_data_length = message_profile->profile_data_length();
-            memcpy(profile_data, message_profile->profile_data(), message_profile->profile_data_length());
+            profile_data.profile_data_length = message_profile->profile_data_length();
+            memcpy(profile_data.profile_data, message_profile->profile_data(), message_profile->profile_data_length());
         }
         break;
         case Ping1dId::RANGE:
         {
             const ping1d_range* message_range = static_cast<const ping1d_range*>(message);
-            scan_start = message_range->scan_start();
-            scan_length = message_range->scan_length();
+            range_data.scan_start = message_range->scan_start();
+            range_data.scan_length = message_range->scan_length();
         }
         break;
         case Ping1dId::SPEED_OF_SOUND:
         {
             const ping1d_speed_of_sound* message_speed_of_sound = static_cast<const ping1d_speed_of_sound*>(message);
-            speed_of_sound = message_speed_of_sound->speed_of_sound();
+            speed_of_sound_data.speed_of_sound = message_speed_of_sound->speed_of_sound();
         }
         break;
         case Ping1dId::TRANSMIT_DURATION:
         {
             const ping1d_transmit_duration* message_transmit_duration = static_cast<const ping1d_transmit_duration*>(message);
-            transmit_duration = message_transmit_duration->transmit_duration();
+            transmit_duration_data.transmit_duration = message_transmit_duration->transmit_duration();
         }
         break;
         case Ping1dId::VOLTAGE_5:
         {
             const ping1d_voltage_5* message_voltage_5 = static_cast<const ping1d_voltage_5*>(message);
-            voltage_5 = message_voltage_5->voltage_5();
+            voltage_5_data.voltage_5 = message_voltage_5->voltage_5();
         }
         break;
 
@@ -177,7 +177,6 @@ bool Ping1d::set_device_id(uint8_t _device_id, bool verify)
     }
     return true;
 }
-
 bool Ping1d::set_gain_setting(uint8_t _gain_setting, bool verify)
 {
     ping1d_set_gain_setting message;
@@ -189,12 +188,11 @@ bool Ping1d::set_gain_setting(uint8_t _gain_setting, bool verify)
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (gain_setting != _gain_setting)) {
+        && (gain_setting_data.gain_setting != _gain_setting)) {
         return false;
     }
     return true;
 }
-
 bool Ping1d::set_mode_auto(uint8_t _mode_auto, bool verify)
 {
     ping1d_set_mode_auto message;
@@ -206,12 +204,11 @@ bool Ping1d::set_mode_auto(uint8_t _mode_auto, bool verify)
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (mode_auto != _mode_auto)) {
+        && (mode_auto_data.mode_auto != _mode_auto)) {
         return false;
     }
     return true;
 }
-
 bool Ping1d::set_ping_enable(uint8_t _ping_enabled, bool verify)
 {
     ping1d_set_ping_enable message;
@@ -223,12 +220,11 @@ bool Ping1d::set_ping_enable(uint8_t _ping_enabled, bool verify)
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (ping_enabled != _ping_enabled)) {
+        && (ping_enable_data.ping_enabled != _ping_enabled)) {
         return false;
     }
     return true;
 }
-
 bool Ping1d::set_ping_interval(uint16_t _ping_interval, bool verify)
 {
     ping1d_set_ping_interval message;
@@ -240,12 +236,11 @@ bool Ping1d::set_ping_interval(uint16_t _ping_interval, bool verify)
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (ping_interval != _ping_interval)) {
+        && (ping_interval_data.ping_interval != _ping_interval)) {
         return false;
     }
     return true;
 }
-
 bool Ping1d::set_range(uint32_t _scan_start, uint32_t _scan_length, bool verify)
 {
     ping1d_set_range message;
@@ -258,13 +253,12 @@ bool Ping1d::set_range(uint32_t _scan_start, uint32_t _scan_length, bool verify)
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (scan_start != _scan_start
-        || scan_length != _scan_length)) {
+        && (range_data.scan_start != _scan_start
+        || range_data.scan_length != _scan_length)) {
         return false;
     }
     return true;
 }
-
 bool Ping1d::set_speed_of_sound(uint32_t _speed_of_sound, bool verify)
 {
     ping1d_set_speed_of_sound message;
@@ -276,9 +270,8 @@ bool Ping1d::set_speed_of_sound(uint32_t _speed_of_sound, bool verify)
     }
     // Read back the data and check that changes have been applied
     if (verify
-        && (speed_of_sound != _speed_of_sound)) {
+        && (speed_of_sound_data.speed_of_sound != _speed_of_sound)) {
         return false;
     }
     return true;
 }
-
