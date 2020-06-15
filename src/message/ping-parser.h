@@ -79,6 +79,9 @@ public:
         case WAIT_MSG_ID_L: // fall-through
         case WAIT_MSG_ID_H:
         case WAIT_SRC_ID:
+            rxBuffer_[rxCount_++] = b;
+            state_++;
+            break;
         case WAIT_DST_ID:
             rxBuffer_[rxCount_++] = b;
             state_++;
