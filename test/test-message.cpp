@@ -177,7 +177,7 @@ bool verifyProfileMessage(ping1d_profile m, test_profile_s t)
     result |= compare("scan_length", m.scan_length(), t.scan_length);
     result |= compare("gain_setting", m.gain_setting(), t.gain_setting);
     result |= compare("profile_data_length", m.profile_data_length(), t.profile_data_length);
-    for (uint16_t i = 0; i < profile_points; i++) {
+    for (uint16_t i = 0; i < m.profile_data_length(); i++) {
         compare("compare data", m.profile_data()[i], t.profile_data[i]);
     }
     return result;
