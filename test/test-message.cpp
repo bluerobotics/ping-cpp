@@ -31,6 +31,7 @@ static const uint32_t profile_msg_length = header_length + profile_payload_lengt
 struct test_profile_s;
 bool verifyProfileMessage(ping1d_profile m, test_profile_s t);
 bool testProfile();
+bool testProfileZeroPayload();
 
 // TODO maybe rework to read in test cases from file.
 int main(void)
@@ -38,6 +39,7 @@ int main(void)
     bool ret = false;
     ret |= testProtocolVersion();
     ret |= testProfile();
+    ret |= testProfileZeroPayload();
     return ret;
 }
 
@@ -245,6 +247,80 @@ bool testProfile()
 
     PingParser p(512); // parser buffer length must be large enough
     for (uint32_t i = 0; i < profile_msg_length; i++) {
+        printf("parse state: %d\n", p.parseByte(test.data[i]));
+    }
+
+    result |= verifyProfileMessage(p.rxMessage, test.fields);
+
+    return result;
+}
+
+bool testProfileZeroPayload()
+{
+    printf("testing ping1d profile message with zero payload...\n");
+
+    bool result = false;
+
+    static const uint32_t profile_msg_length2 = header_length + profile_static_payload_length + checksum_length;
+
+    // Hand-made test case
+    union {
+        test_profile_s fields {
+            'B',
+            'R',
+            profile_payload_length,
+            Ping1dId::PROFILE,
+            56,
+            45,
+            1000,
+            93,
+            2111,
+            44444444,
+            4000,
+            35000,
+            4,
+            0,
+            {}, // profile data
+            1502 // checksum
+        };
+        uint8_t data[profile_msg_length2];
+    } test;
+
+    printf("Testing byte array to object conversion...\n\n");
+
+    // TODO test all constructors
+    // TODO test dynamic arrays, implicit and explicit length
+    ping1d_profile test_in(test.data, profile_msg_length2);
+
+    result |= verifyProfileMessage(test_in, test.fields);
+
+    printf("\nTesting object to byte array conversion...\n\n");
+
+    ping1d_profile test_out(profile_points);
+    test_out.set_source_device_id(test.fields.source_device_id);
+    test_out.set_destination_device_id(test.fields.destination_device_id);
+    test_out.set_distance(test.fields.distance);
+    test_out.set_confidence(test.fields.confidence);
+    test_out.set_transmit_duration(test.fields.transmit_duration);
+    test_out.set_ping_number(test.fields.ping_number);
+    test_out.set_scan_start(test.fields.scan_start);
+    test_out.set_scan_length(test.fields.scan_length);
+    test_out.set_gain_setting(test.fields.gain_setting);
+    test_out.set_profile_data_length(test.fields.profile_data_length);
+    for (uint16_t i = 0; i < profile_points; i++) {
+        test_out.set_profile_data_at(i, test.fields.profile_data[i]);
+    }
+
+    test_out.updateChecksum();
+
+    for (uint32_t i = 0; i < profile_msg_length2; i++) {
+        result |= compare("checking output byte", test_out.msgData[i], test.data[i]);
+    }
+
+    printf("\ntesting parser...\n\n");
+
+    PingParser p(512); // parser buffer length must be large enough
+    for (uint32_t i = 0; i < profile_msg_length2; i++) {
         printf("parse state: %d\n", p.parseByte(test.data[i]));
     }
 
