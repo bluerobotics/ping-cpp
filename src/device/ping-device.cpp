@@ -11,7 +11,7 @@ ping_message* PingDevice::read()
 {
     uint8_t data;
     int result = _port.read(&data, 1);
-    if (result != 0 && _parser.parseByte(data) == PingParser::NEW_MESSAGE) {
+    if (result != 0 && _parser.parseByte(data) == PingParser::State::NEW_MESSAGE) {
         return &_parser.rxMessage;
     }
     return nullptr;

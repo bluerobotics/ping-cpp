@@ -10,6 +10,8 @@ if(MSVC)
   add_compile_options(/W4 /WX)
 else()
   add_compile_options(-Wall -Wextra -pedantic -Werror)
+  # Can be removed moving to C++17, or we could move this library out from header only
+  add_compile_options(-Wno-unused-function)
 endif()
 
 # Used for the command line interface
