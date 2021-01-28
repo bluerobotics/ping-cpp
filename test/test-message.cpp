@@ -321,7 +321,7 @@ bool testProfileZeroPayload()
 
     PingParser p(512); // parser buffer length must be large enough
     for (uint32_t i = 0; i < profile_msg_length2; i++) {
-        printf("parse state: %d\n", p.parseByte(test.data[i]));
+        printf("parse state: %s\n", PINGPARSER_STATE_TO_STRING(p.parseByte(test.data[i])));
     }
 
     result |= verifyProfileMessage(p.rxMessage, test.fields);
