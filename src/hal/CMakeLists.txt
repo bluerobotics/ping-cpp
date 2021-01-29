@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.12)
 project(HAL)
 
 find_package(Boost 1.67 COMPONENTS atomic program_options system thread REQUIRED)
