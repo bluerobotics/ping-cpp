@@ -13,7 +13,6 @@ install:
 # this is requried to be able to checkout branches after fetching
 - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
 - git fetch origin deployment
-- pip3 install --user jinja2;
 - sudo add-apt-repository -y ppa:mhier/libboost-latest
 - sudo apt install -y libboost1.70-dev
 
