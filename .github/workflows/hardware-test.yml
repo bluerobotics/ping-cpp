@@ -1,10 +1,6 @@
 name: Linux hardware test
 
-on:
-  push:
-    branches: [ master, potato ]
-  pull_request:
-    branches: [ master, potato ]
+on: [push, pull_request]
 
 jobs:
   build:
