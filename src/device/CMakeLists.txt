@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 project(DEVICE)
 
-# Check if python is installed with the necessary components
-find_package(Python3 QUIET REQUIRED COMPONENTS Interpreter)
-
 # Generate ping-cpp devices
 add_custom_target(generate-devices
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../generate/generate-device.py --output-dir ${CMAKE_CURRENT_SOURCE_DIR}
