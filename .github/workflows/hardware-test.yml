@@ -19,9 +19,8 @@ jobs:
     - name: Build it
       run: |
         git submodule update --init --recursive
-        mkdir build && cd build
-        cmake ..
-        cmake --build .
+        mkdir build
+        cmake -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --parallel --config Debug
 
     - name: Run tests
       run: |
