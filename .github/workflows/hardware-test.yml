@@ -13,7 +13,6 @@ jobs:
       run: |
         rm -rf /etc/apt/trusted.gpg
         sudo apt -y update
-        sudo apt -y update
         sudo apt -y install cmake libboost-all-dev
         sudo apt -y install python3-pip python3-setuptools
 
