@@ -20,7 +20,6 @@ jobs:
         sudo apt -y update
         sudo apt -y install cmake libboost-all-dev
         sudo apt -y install python3-pip python3-setuptools
-        sudo pip3 install jinja2
 
     - name: Build it
       run: |
