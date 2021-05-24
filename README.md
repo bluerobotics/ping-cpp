@@ -9,4 +9,25 @@ This repository has the ping_message base class, and templates + scripts to auto
 
 ## Usage
 
+#### Generated files
+
 If you would like to use the C++ API in your project, checkout the [deployment branch](https://github.com/bluerobotics/ping-cpp/tree/deployment).
+
+#### CMake project
+
+The **master branch** can be used directly in CMake based projects for desktop or SBC applications.
+##### Example
+
+```sh
+# Clone the repository
+git clone https://github.com/bluerobotics/ping-cpp
+cd ping-cpp
+# Update the submodules
+git submodule update --init --recursive
+# Configure and build the project in debug mode
+cmake -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build --parallel --config Debug
+# Connect a Ping device and use the correct USB as argument
+./build/test-device --conn serial:/dev/ttyUSB0:115200
+# If you have a Ping1D connected, you can run the test program for the device
+./build/test-device-ping1d --conn serial:/dev/ttyUSB0:115200
+```
