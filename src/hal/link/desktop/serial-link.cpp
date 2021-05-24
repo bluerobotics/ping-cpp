@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <thread>
 
 #include "serial-link.h"
 
