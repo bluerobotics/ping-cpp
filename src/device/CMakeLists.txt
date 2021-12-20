@@ -6,14 +6,14 @@ add_custom_target(generate-devices
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../generate/generate-device.py --output-dir ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generates ping device class."
 BYPRODUCTS
-    ${CMAKE_CURRENT_SOURCE_DIR}/ping-device-ping1d.cpp
-)
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-device-ping360.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-device-ping1d.cpp
+  )
 
 add_library(
     DEVICE
 STATIC
-    ping-device-ping1d.cpp
-    ping-device.cpp
+  ping-device.cpp
 )
 
 include_directories(${HAL_SOURCE_DIR})
