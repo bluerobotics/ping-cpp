@@ -1,0 +1,73 @@
+#include <ping-message-common.h>
+#include "ping-message-ping360.h"
+#include "ping-device-ping360.h"
+
+Ping360::~Ping360()
+{
+{% for msg in messages["get"]|sort %}
+{% for field in messages["get"][msg].payload %}
+{% if generator.is_vector(field.type) %}
+    if ({{msg}}_data.{{field.name}}) {
+        delete[] {{msg}}_data.{{field.name}};
+    }
+{% endif %}
+{% endfor %}
+{% endfor %}
+}
+
+bool Ping360::initialize()
+{
+    if (!PingDevice::initialize()) {
+        return false;
+    }
+
+    return true;
+}
+
+void Ping360::_handleMessage(const ping_message* message)
+{
+    switch (message->message_id()) {
+{% for msg in messages["get"]|sort %}
+{% if not messages["get"][msg].deprecated %}
+        case Ping360Id::{{msg|upper}}:
+        {
+            const ping360_{{msg}}* message_{{msg}} = static_cast<const ping360_{{msg}}*>(message);
+{% for field in messages["get"][msg].payload %}
+{% if generator.is_vector(field.type) %}
+            if (message_{{msg}}->{{field.name}}_length() > {{msg}}_data.{{field.name}}_length) {
+                if ({{msg}}_data.{{field.name}}) {
+                    delete[] {{msg}}_data.{{field.name}};
+                }
+                {{msg}}_data.{{field.name}} = new {{generator.get_type_string(field.vector.datatype)}}[message_{{msg}}->{{field.name}}_length()];
+            }
+
+            {{msg}}_data.{{field.name}}_length = message_{{msg}}->{{field.name}}_length();
+            memcpy({{msg}}_data.{{field.name}}, message_{{msg}}->{{field.name}}(), message_{{msg}}->{{field.name}}_length());
+{% else %}
+            {{msg}}_data.{{field.name}} = message_{{msg}}->{{field.name}}();
+{% endif %}
+{% endfor %}
+        }
+        break;
+{% endif %}
+{% endfor %}
+
+        default:
+            break;
+    }
+
+    PingDevice::_handleMessage(message);
+}
+
+
+{% for msg in messages["control"]|sort %}
+void Ping360::set_{{msg}}({% for field in messages["control"][msg].payload %}{{generator.get_type_string(field.type)}} _{{field.name}}{{ ", " if not loop.last else "" }}{% endfor %})
+{
+    ping360_{{msg}} message;
+{% for field in messages["control"][msg].payload %}
+    message.set_{{field.name}}(_{{field.name}});
+{% endfor %}
+    writeMessage(message);
+}
+
+{% endfor %}
