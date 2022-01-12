@@ -17,10 +17,12 @@ cd ..
 # because these files are gitignored, we have to force-add and commit them
 # in order to move them to the deployment branch. every other approach I tried
 # clobbered the files
+git add src/hal -f
 git add src/message -f
 git add src/device -f
 git commit -m temporary-commit
 git checkout deployment
+git checkout HEAD@{1} src/hal
 git checkout HEAD@{1} src/message
 git checkout HEAD@{1} src/device
 git diff --staged
