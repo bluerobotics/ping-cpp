@@ -4,10 +4,21 @@ project(PING_MESSAGES)
 # Check if python is installed with the necessary components
 find_package(Python3 QUIET REQUIRED COMPONENTS Interpreter)
 
-add_custom_target(generate-messages
+set(GENSRC
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-message-all.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-message-bluebps.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-message-common.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-message-ping1d.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/ping-message-ping360.h
+)
+add_custom_command(
   # generate ping messages
   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../generate/generate-message.py --output-dir ${CMAKE_CURRENT_SOURCE_DIR}/../message
   COMMENT "Generates ping messages"
+  OUTPUT ${GENSRC}
+)
+add_custom_target(generate-messages
+  DEPENDS ${GENSRC}
 )
 
 add_library(PING_MESSAGES INTERFACE)
