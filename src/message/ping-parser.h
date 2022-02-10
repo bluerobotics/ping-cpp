@@ -151,6 +151,9 @@ inline PingParser::State PingParser::parseByte(const uint8_t data)
     case PingParser::State::WAIT_MSG_ID_L: // fall-through
     case PingParser::State::WAIT_MSG_ID_H:
     case PingParser::State::WAIT_SRC_ID:
+        rxBuffer_[rxCount_++] = data;
+        state_++;
+        break;
     case PingParser::State::WAIT_DST_ID:
         rxBuffer_[rxCount_++] = data;
         state_++;
