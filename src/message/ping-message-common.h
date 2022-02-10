@@ -18,6 +18,7 @@ namespace CommonId
     static const uint16_t GENERAL_REQUEST = 6;
     static const uint16_t DEVICE_INFORMATION = 4;
     static const uint16_t PROTOCOL_VERSION = 5;
+    static const uint16_t SET_DEVICE_ID = 100;
 }
 
 class common_ack : public ping_message
@@ -230,6 +231,36 @@ public:
                 , version_minor()
                 , version_patch()
                 , reserved()
+            );
+        }
+        return written;
+    }
+};
+
+class common_set_device_id : public ping_message
+{
+public:
+    common_set_device_id(const ping_message& msg) : ping_message { msg } {}
+    common_set_device_id(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
+    common_set_device_id() : ping_message { static_cast<uint16_t>(11) }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>(1); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = 100; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
+
+    uint8_t device_id() const { return reinterpret_cast<uint8_t&>(msgData[headerLength + 0]); }
+    void set_device_id(const uint8_t device_id) { reinterpret_cast<uint8_t&>(msgData[headerLength + 0]) = device_id; }
+
+    int getMessageAsString(char* string, size_t size) const {
+        int written = ping_message::getMessageAsString(string, size);
+        if (written > 0 && written < static_cast<int>(size)) {
+            return snprintf(string + written, size - static_cast<size_t>(written),
+                "  device_id: %d\n"
+                , device_id()
             );
         }
         return written;

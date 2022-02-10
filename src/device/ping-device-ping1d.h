@@ -221,7 +221,7 @@ public:
         uint32_t scan_length;
         // The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144
         uint32_t gain_setting;
-        // An array of return strength measurements taken at regular intervals across the scan region.
+        // An array of return strength measurements taken at regular intervals across the scan region. The first element is the closest measurement to the sensor, and the last element is the farthest measurement in the scanned range.
         uint8_t* profile_data = nullptr;
         uint16_t profile_data_length = 0;
     } profile_data;

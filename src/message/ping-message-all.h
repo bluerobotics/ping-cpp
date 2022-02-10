@@ -57,6 +57,7 @@ enum class PingMessageId {
     COMMON_GENERAL_REQUEST = 6,
     COMMON_DEVICE_INFORMATION = 4,
     COMMON_PROTOCOL_VERSION = 5,
+    COMMON_SET_DEVICE_ID = 100,
     PING1D_SET_DEVICE_ID = 1000,
     PING1D_SET_RANGE = 1001,
     PING1D_SET_SPEED_OF_SOUND = 1002,
@@ -83,7 +84,7 @@ enum class PingMessageId {
     PING1D_GOTO_BOOTLOADER = 1100,
     PING1D_CONTINUOUS_START = 1400,
     PING1D_CONTINUOUS_STOP = 1401,
-    PING360_DEVICE_ID = 2000,
+    PING360_SET_DEVICE_ID = 2000,
     PING360_DEVICE_DATA = 2300,
     PING360_AUTO_DEVICE_DATA = 2301,
     PING360_RESET = 2600,
@@ -184,6 +185,8 @@ public:
                 return "DEVICE_INFORMATION";
             case(PingEnumNamespace::PingMessageId::COMMON_PROTOCOL_VERSION):
                 return "PROTOCOL_VERSION";
+            case(PingEnumNamespace::PingMessageId::COMMON_SET_DEVICE_ID):
+                return "SET_DEVICE_ID";
             case(PingEnumNamespace::PingMessageId::PING1D_SET_DEVICE_ID):
                 return "SET_DEVICE_ID";
             case(PingEnumNamespace::PingMessageId::PING1D_SET_RANGE):
@@ -236,8 +239,8 @@ public:
                 return "CONTINUOUS_START";
             case(PingEnumNamespace::PingMessageId::PING1D_CONTINUOUS_STOP):
                 return "CONTINUOUS_STOP";
-            case(PingEnumNamespace::PingMessageId::PING360_DEVICE_ID):
-                return "DEVICE_ID";
+            case(PingEnumNamespace::PingMessageId::PING360_SET_DEVICE_ID):
+                return "SET_DEVICE_ID";
             case(PingEnumNamespace::PingMessageId::PING360_DEVICE_DATA):
                 return "DEVICE_DATA";
             case(PingEnumNamespace::PingMessageId::PING360_AUTO_DEVICE_DATA):

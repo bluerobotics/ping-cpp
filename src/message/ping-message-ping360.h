@@ -12,7 +12,7 @@
 // TODO: should maybe be an enum
 namespace Ping360Id
 {
-    static const uint16_t DEVICE_ID = 2000;
+    static const uint16_t SET_DEVICE_ID = 2000;
     static const uint16_t DEVICE_DATA = 2300;
     static const uint16_t AUTO_DEVICE_DATA = 2301;
     static const uint16_t RESET = 2600;
@@ -21,12 +21,12 @@ namespace Ping360Id
     static const uint16_t MOTOR_OFF = 2903;
 }
 
-class ping360_device_id : public ping_message
+class ping360_set_device_id : public ping_message
 {
 public:
-    ping360_device_id(const ping_message& msg) : ping_message { msg } {}
-    ping360_device_id(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
-    ping360_device_id() : ping_message { static_cast<uint16_t>(12) }
+    ping360_set_device_id(const ping_message& msg) : ping_message { msg } {}
+    ping360_set_device_id(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
+    ping360_set_device_id() : ping_message { static_cast<uint16_t>(12) }
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
