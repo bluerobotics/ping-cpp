@@ -59,6 +59,23 @@ PRIVATE
     fmt::fmt
 )
 
+# test-device-ping1d
+add_executable(test-device-ping360)
+target_sources(
+    test-device-ping360
+PRIVATE
+    test/test-device-ping360.cpp
+)
+target_link_libraries(
+    test-device-ping360
+PRIVATE
+    DEVICE
+    HAL
+    PING_MESSAGES
+    ${Boost_LIBRARIES}
+    fmt::fmt
+)
+
 # test-message
 add_executable(test-message)
 target_sources(
