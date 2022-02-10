@@ -10,7 +10,11 @@
 class PingParser
 {
 public:
-    PingParser(uint16_t bufferLength = 512) : rxMessage(bufferLength), rxBuffer_(rxMessage.msgData) {}
+    PingParser(uint16_t bufferLength = 512)
+        :rxMessage(bufferLength)
+        ,rxBuffer_(rxMessage.msgData)
+        ,rxBufferLength_(bufferLength)
+    {}
     ~PingParser() = default;
 
     ping_message rxMessage; // This message is used as the rx buffer
