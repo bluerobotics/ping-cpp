@@ -7,5 +7,5 @@
 namespace PingTime {
 void microsecondDelay(unsigned int microseconds);
 int timeMs();
-void yeild();
+void yield();
 }
