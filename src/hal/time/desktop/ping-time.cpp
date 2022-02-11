@@ -18,4 +18,4 @@ void PingTime::microsecondDelay(unsigned int microseconds)
     std::this_thread::sleep_for(std::chrono::microseconds(microseconds));
 }
 
-void PingTime::yeild() { std::this_thread::yield(); }
+void PingTime::yield() { std::this_thread::yield(); }
