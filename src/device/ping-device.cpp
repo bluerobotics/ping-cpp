@@ -53,7 +53,7 @@ ping_message* PingDevice::waitMessage(uint16_t id, int timeoutMs)
             return message;
         }
         // Prevent cpu spinlock
-        PingTime::yeild();
+        PingTime::yield();
     }
 
     return nullptr;
