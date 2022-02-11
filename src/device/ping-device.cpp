@@ -5,7 +5,14 @@
 
 #include <cstdio>
 
-bool PingDevice::initialize() { return request(CommonId::PROTOCOL_VERSION) && request(CommonId::DEVICE_INFORMATION); }
+bool PingDevice::initialize() 
+{
+    // write a byte of alternating bits, to allow auto-baudrate detection
+    static const uint8_t detection_byte = 0b01010101;
+    _port.write(&detection_byte, 1);
+    // attempt to initialise by extracting common information
+    return request(CommonId::PROTOCOL_VERSION) && request(CommonId::DEVICE_INFORMATION);
+}
 
 ping_message* PingDevice::read()
 {
