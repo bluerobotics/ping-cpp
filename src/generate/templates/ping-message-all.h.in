@@ -26,6 +26,7 @@ enum class PingDeviceType {
     PING1D = 1,
     PING360 = 2,
     PINGHF = 3,
+    PING2 = 4,
 };
 Q_ENUM_NS(PingDeviceType)
 
