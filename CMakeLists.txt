@@ -8,10 +8,14 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Enable compile checks for msvc, clang and gcc
 if(MSVC)
   add_compile_options(/W4 /WX)
+  # Disable exceptions
+  add_compile_options(/EHs-c-)
 else()
   add_compile_options(-Wall -Wextra -pedantic -Werror)
   # Can be removed moving to C++17, or we could move this library out from header only
   add_compile_options(-Wno-unused-function)
+  # Disable exceptions
+  add_compile_options(-fno-exceptions)
 endif()
 
 # Used for the command line interface
