@@ -30,6 +30,8 @@ int main(int argc, char* argv[])
 
     // Common messages validation
     PingDeviceTest::test("Device Hardware revision", device.device_information.device_revision, Status::OK);
+
+    printf("Protocol version: %d.%d.%d\n", device.protocol_version.version_major, device.protocol_version.version_minor, device.protocol_version.version_patch);
     switch (device_type) {
         case (PingDeviceType::PING1D):
             PingDeviceTest::test(
@@ -46,7 +48,7 @@ int main(int argc, char* argv[])
             );
         break;
         default:
-            printf("Protocol version: %d.%d.%d\n", device.protocol_version.version_major, device.protocol_version.version_minor, device.protocol_version.version_patch);
+            break;
 
     }
     PingDeviceTest::test(
