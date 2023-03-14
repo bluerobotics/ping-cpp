@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
         case (PingDeviceType::PING360):
             PingDeviceTest::test(
                 "Protocol version",
-                device.protocol_version.version_major == 1 && device.protocol_version.version_minor == 1 && device.protocol_version.version_patch == 0,
+                device.protocol_version.version_major == 1 && device.protocol_version.version_minor == 0 && device.protocol_version.version_patch == 0,
                 Status::OK
             );
         break;
