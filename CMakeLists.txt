@@ -21,70 +21,80 @@ include_directories(${Boost_INCLUDE_DIR})
 # Include modules
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-# Add fmt
-include_directories(lib/fmt/include/)
-add_subdirectory(lib/fmt/)
+message("Building tests: ${PING_CPP_BUILD_TESTS}")
+if(NOT DEFINED PING_CPP_BUILD_TESTS)
+    set(PING_CPP_BUILD_TESTS true)
+endif()
 
-# test-device
-add_executable(test-device)
-target_sources(
-    test-device
-PRIVATE
-    test/test-device.cpp
-)
-target_link_libraries(
-    test-device
-PRIVATE
-    DEVICE
-    HAL
-    PING_MESSAGES
-    ${Boost_LIBRARIES}
-    fmt::fmt
-)
+if (PING_CPP_BUILD_TESTS MATCHES "true")
+    # Add fmt subdirectory
+    add_subdirectory(lib/fmt/)
 
-# test-device-ping1d
-add_executable(test-device-ping1d)
-target_sources(
-    test-device-ping1d
-PRIVATE
-    test/test-device-ping1d.cpp
-)
-target_link_libraries(
-    test-device-ping1d
-PRIVATE
-    DEVICE
-    HAL
-    PING_MESSAGES
-    ${Boost_LIBRARIES}
-    fmt::fmt
-)
+    # test-device
+    add_executable(test-device)
+    target_include_directories(test-device PRIVATE lib/fmt/include/)
+    target_sources(
+        test-device
+    PRIVATE
+        test/test-device.cpp
+    )
+    target_link_libraries(
+        test-device
+    PRIVATE
+        DEVICE
+        HAL
+        PING_MESSAGES
+        ${Boost_LIBRARIES}
+        fmt::fmt
+    )
 
-# test-device-ping1d
-add_executable(test-device-ping360)
-target_sources(
-    test-device-ping360
-PRIVATE
-    test/test-device-ping360.cpp
-)
-target_link_libraries(
-    test-device-ping360
-PRIVATE
-    DEVICE
-    HAL
-    PING_MESSAGES
-    ${Boost_LIBRARIES}
-    fmt::fmt
-)
+    # test-device-ping1d
+    add_executable(test-device-ping1d)
+    target_include_directories(test-device-ping1d PRIVATE lib/fmt/include/)
+    target_sources(
+        test-device-ping1d
+    PRIVATE
+        test/test-device-ping1d.cpp
+    )
+    target_link_libraries(
+        test-device-ping1d
+    PRIVATE
+        DEVICE
+        HAL
+        PING_MESSAGES
+        ${Boost_LIBRARIES}
+        fmt::fmt
+    )
 
-# test-message
-add_executable(test-message)
-target_sources(
-    test-message
-PRIVATE
-    test/test-message.cpp
-)
-target_link_libraries(
-    test-message
-PRIVATE
-    PING_MESSAGES
-)
+    # test-device-ping360
+    add_executable(test-device-ping360)
+    target_include_directories(test-device-ping360 PRIVATE lib/fmt/include/)
+    target_sources(
+        test-device-ping360
+    PRIVATE
+        test/test-device-ping360.cpp
+    )
+    target_link_libraries(
+        test-device-ping360
+    PRIVATE
+        DEVICE
+        HAL
+        PING_MESSAGES
+        ${Boost_LIBRARIES}
+        fmt::fmt
+    )
+
+    # test-message
+    add_executable(test-message)
+    target_include_directories(test-message PRIVATE lib/fmt/include/)
+    target_sources(
+        test-message
+    PRIVATE
+        test/test-message.cpp
+    )
+    target_link_libraries(
+        test-message
+    PRIVATE
+        PING_MESSAGES
+    )
+endif()
