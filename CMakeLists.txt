@@ -21,7 +21,7 @@ include_directories(${Boost_INCLUDE_DIR})
 # Include modules
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-option(PING_CPP_BUILD_TESTS "" ON)
+option(PING_CPP_BUILD_TESTS "Build the test cases when PING_CPP_BUILD_TESTS is enabled." ON)
 message("Building tests: ${PING_CPP_BUILD_TESTS}")
 
 if (PING_CPP_BUILD_TESTS)
