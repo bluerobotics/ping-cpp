@@ -28,11 +28,11 @@ public:
         }
     }
 
-    ping_message(const uint8_t* buf, const uint16_t length)
+    ping_message(uint8_t* buf, const uint16_t length)
         : _bufferLength { length }
-        , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
+        , msgData { buf }
     {
-        memcpy(msgData, buf, _bufferLength);
+        _copied = false;
     }
 
     ping_message& operator = (const ping_message &msg) {
@@ -43,10 +43,11 @@ public:
         return *this;
     }
 
-    ~ping_message() { if(msgData) free(msgData); }
+    ~ping_message() { if(msgData && _copied) free(msgData); }
 
 protected:
     uint16_t _bufferLength;
+    bool _copied = true;
 
 public:
     static const uint8_t headerLength = 8;
