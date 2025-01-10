@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
             ,0          //reserved
         );
 
-        const auto message_device_data = static_cast<const ping360_device_data*>(device.waitMessage(Ping360Id::DEVICE_DATA, 8000));
+        [[maybe_unused]] const auto message_device_data = static_cast<const ping360_device_data*>(device.waitMessage(Ping360Id::DEVICE_DATA, 8000));
         assert(message_device_data);
         assert(message_device_data->angle() == number);
     }
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
         ,0          //delay
     );
     for(int number = 0; number < 200; number += 1) {
-        const auto message_device_data = static_cast<const ping360_auto_device_data*>(device.waitMessage(Ping360Id::AUTO_DEVICE_DATA, 8000));
+        [[maybe_unused]] const auto message_device_data = static_cast<const ping360_auto_device_data*>(device.waitMessage(Ping360Id::AUTO_DEVICE_DATA, 8000));
         assert(message_device_data);
         assert(message_device_data->angle() == number);
     }
