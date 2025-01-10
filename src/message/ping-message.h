@@ -13,6 +13,7 @@ public:
 
     ping_message(const ping_message &msg)
         : _bufferLength { msg.msgDataLength() }
+        , _allocated { true }
         , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
     {
         memcpy(msgData, msg.msgData, _bufferLength);
@@ -20,6 +21,7 @@ public:
 
     ping_message(const uint16_t bufferLength)
         : _bufferLength { bufferLength }
+        , _allocated { true }
         , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
     {
         if (bufferLength >= 2) {
@@ -28,8 +30,16 @@ public:
         }
     }
 
+    ping_message(uint8_t* buf, const uint16_t length)
+        : _bufferLength { length }
+        , _allocated { false }
+        , msgData { buf }
+    {
+    }
+
     ping_message(const uint8_t* buf, const uint16_t length)
         : _bufferLength { length }
+        , _allocated { true }
         , msgData { static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength)) }
     {
         memcpy(msgData, buf, _bufferLength);
@@ -37,22 +47,26 @@ public:
 
     ping_message& operator = (const ping_message &msg) {
         _bufferLength = msg.msgDataLength();
+        _allocated = msg.allocated();
+
         if(msgData) free(msgData);
         msgData = static_cast<uint8_t*>(malloc(sizeof(uint8_t) * _bufferLength));
         memcpy(msgData, msg.msgData, _bufferLength);
         return *this;
     }
 
-    ~ping_message() { if(msgData) free(msgData); }
+    ~ping_message() { if(msgData && _allocated) free(msgData); }
 
 protected:
     uint16_t _bufferLength;
+    bool _allocated;
 
 public:
     static const uint8_t headerLength = 8;
     static const uint8_t checksumLength = 2;
 
     uint8_t* msgData;
+    bool allocated() const { return _allocated; }
     uint16_t bufferLength() const { return _bufferLength; } // size of internal buffer allocation
     uint16_t msgDataLength() const { return static_cast<uint16_t>(headerLength + payload_length() + checksumLength); } // size of entire message buffer (header, payload, and checksum)
     uint8_t* message_data(uint32_t offset=0) const { return msgData + offset; }
