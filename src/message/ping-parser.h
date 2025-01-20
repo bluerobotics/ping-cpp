@@ -74,7 +74,7 @@ private:
     State state_ = PingParser::State::WAIT_START;
 };
 
-static const char* PINGPARSER_STATE_TO_STRING(PingParser::State state) {
+[[maybe_unused]] static const char* PINGPARSER_STATE_TO_STRING(PingParser::State state) {
     switch(state) {
         case PingParser::State::NEW_MESSAGE:
             return "NEW_MESSAGE";
