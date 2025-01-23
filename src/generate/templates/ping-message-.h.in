@@ -30,7 +30,15 @@ class {{class_name}} : public ping_message
 {
 public:
     {{class_name}}(const ping_message& msg) : ping_message { msg } {}
-    {{class_name}}(uint8_t* buf) : ping_message { buf, {{8 + total_payload + 2}} } {}
+    {{class_name}}(uint8_t* buf) : ping_message { buf, {{8 + total_payload + 2}} }
+    {
+        msgData[0] = 'B';
+        msgData[1] = 'R';
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>({{total_payload}}); // payload size
+        reinterpret_cast<uint16_t&>(msgData[4]) = {{m.id}}; // ID
+        msgData[6] = 0;
+        msgData[7] = 0;
+    }
     {{class_name}}(const uint8_t* buf, const uint16_t length) : ping_message { buf, length } {}
     {{class_name}}(
 {%- for payload in m.payload %}
