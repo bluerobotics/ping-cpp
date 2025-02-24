@@ -34,7 +34,7 @@ SerialLink::SerialLink(const std::string& port, uint32_t baudrate)
     }
 
     // Bind event loop start with the async read schedulement
-    _context.eventLoop.post(boost::bind(&SerialLink::bindRead, this));
+    boost::asio::post(_context.eventLoop, boost::bind(&SerialLink::bindRead, this));
 
     runEventLoop();
 
