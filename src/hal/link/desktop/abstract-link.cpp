@@ -17,6 +17,7 @@ const char* AbstractLink::_urlStringRegex = R"((?P<type>udp|serial):(?P<host>.*)
 std::shared_ptr<AbstractLink> AbstractLink::openUrl(const std::string& url)
 {
     if (url.empty()) {
+        std::cerr << "Empty URL was provided when trying to open a link" << std::endl;
         return {};
     }
 
@@ -30,6 +31,7 @@ std::shared_ptr<AbstractLink> AbstractLink::openUrl(const std::string& url)
     } urlStruct;
 
     if (!regex_search(url, match, regex)) {
+        std::cerr << "Invalid URL provided, should be in format `type:host:config`" << std::endl;
         return {};
     }
 
@@ -46,5 +48,6 @@ std::shared_ptr<AbstractLink> AbstractLink::openUrl(const std::string& url)
         return std::make_shared<UdpLink>(urlStruct.host, urlStruct.config);
     }
 
+    std::cerr << "Unknown link type provided" << std::endl;
     return {};
 }
