@@ -19,6 +19,10 @@ int main(int argc, char* argv[])
     }
 
     auto port = AbstractLink::openUrl(CommandLine::self()->connectionString);
+    if (!port) {
+        std::cerr << "Failed to open communication link with device" << std::endl;
+        return -1;
+    }
     PingDevice device = PingDevice(*port.get());
 
     // Basic information
