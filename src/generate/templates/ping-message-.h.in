@@ -50,7 +50,12 @@ public:
     {
         msgData[0] = 'B';
         msgData[1] = 'R';
-        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>({{total_payload}}); // payload size
+        reinterpret_cast<uint16_t&>(msgData[2]) = static_cast<uint16_t>({{total_payload}}
+{%- for payload in m.payload %}
+{% if generator.is_vector(payload.type) %}
+ + {{payload.name}}_length
+{%- endif %}
+{% endfor %}); // payload size
         reinterpret_cast<uint16_t&>(msgData[4]) = {{m.id}}; // ID
         msgData[6] = 0;
         msgData[7] = 0;
